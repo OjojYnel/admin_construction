@@ -194,6 +194,7 @@ if (!isset($_SESSION['username'])) {
 
                         </tbody>
                     </table>
+                    <hr>
                     <div>
                         <h3 class="text-center">Add Feedback</h3>
                         <textarea class="form-control" name="feed" placeholder="Feedback message"></textarea>
