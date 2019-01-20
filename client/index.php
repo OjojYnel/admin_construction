@@ -41,18 +41,18 @@ if (!isset($_SESSION['username'])) {
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="index.php?catid=1">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="rentals.php">Rentals</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="transactions.php?catid=1">Transactions</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="Ratings.php?catid=1">Ratings</a>
                 </li>
                 <li class="nav-item">
@@ -84,7 +84,7 @@ if (!isset($_SESSION['username'])) {
                 $r = $con->query($sql);
 
                 while ($row = $r->fetch_assoc()) {
-                    echo "<a href=" . 'Ratings.php?catid=' . $row['categoryId'] . " class='list-group-item'>" . $row['categoryName'] . "</a>";
+                    echo "<a href=" . 'index.php?catid=' . $row['categoryId'] . " class='list-group-item'>" . $row['categoryName'] . "</a>";
                 }
 
                 ?>
@@ -114,7 +114,7 @@ if (!isset($_SESSION['username'])) {
                                 <div class="card h-100">
                                     <br>
                                        <div class="text-center"><button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
-                                            Ratings
+                                            Rent
                                         </button></div>
                                     <br>
                                      ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
@@ -173,8 +173,8 @@ if (!isset($_SESSION['username'])) {
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form action="addRatings.php" method="post">
+    <div class="modal-dialog" role="document">
+        <form action="rent.php" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -182,48 +182,19 @@ if (!isset($_SESSION['username'])) {
                     </button>
                 </div>
                 <div class="text-center">
-                    <input id="ayd" type="hidden" class="form-control" name="ayd">
-                    <h5 class="modal-title" id="exampleModalLabel">Ratings</h5>
-                    <h2 id="rate"></h2>
-
+                    <h5 class="modal-title" id="exampleModalLabel">Duration</h5>
                 </div>
                 <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <th class="">Feedback</th>
-                            <th class="">Rate</th>
-                        </thead>
-                        <tbody id="tab">
-
-                        </tbody>
-                    </table>
-                    <hr>
-                    <div>
-                        <h3 class="text-center">Add Feedback</h3>
-                        <textarea class="form-control" name="feed" placeholder="Feedback message"></textarea>
-                        <br>
-                        <select class="form-control" required name="rating">
-                            <option selected disabled>Select Rating</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-
-                        </select>
-                    </div>
-
-
+                    <input type="number" class="form-control" name="dura" placeholder="Number of Days to rent">
+                    <input id="ayd" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Add Feedback">
-                </div>
+                    <input type="submit" class="btn btn-primary" value="Rent">
+            </div>
         </form>
     </div>
 </div>
-
-
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
@@ -236,46 +207,10 @@ if (!isset($_SESSION['username'])) {
         $('#exampleModal').on("show.bs.modal", function (ev) {
             let id = $(ev.relatedTarget).data('id');
             console.log(id)
-
             $('#ayd').val(id);
-
-            getRate(id)
-
-
 
         })
     });
-
-    function getRate(x) {
-        $id = x;
-        $.ajax({
-            url: 'getRate.php',
-            data: {ayd: $id},
-            dataType: 'JSON',
-            success: function (data) {
-                if (!Array.isArray(data) || !data.length) {
-                    // array does not exist, is not an array, or is empty
-                    c = "<tr><td>No Feedback Yet</td></tr>";
-                    $('#tab').html(c);
-                    console.log("test")
-                } else {
-                    console.log(data);
-
-                    let a = '';
-                    let x = '';
-
-
-                    for (let i = 0; i < data.length; i++) {
-                        x += "<tr>" +
-                            "<td>" + data[i][3] + "</td>" +
-                            "<td>" + data[i][4] + " / 5</td>";
-                    }
-                    $('#tab').html(x);
-                }
-
-            }
-        });
-    }
 
 
 </script>

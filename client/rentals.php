@@ -46,14 +46,14 @@ if (!isset($_SESSION['username'])) {
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="rentals.php">Rentals</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Rentals</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="transactions.php?catid=1">Transactions</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="Ratings.php?catid=1">Ratings</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="Ratings.php?catid=1">Transactions</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="change_password.php">Change Password</a>
@@ -73,22 +73,8 @@ if (!isset($_SESSION['username'])) {
 
         <div class="col-lg-3">
 
-            <h1 class="my-4">Categories</h1>
-            <div class="list-group">
-                <a name=""></a>
+            <h1 class="my-4">Rentals</h1>
 
-                <?php
-                require 'config.php';
-
-                $sql = "SELECT * FROM categories";
-                $r = $con->query($sql);
-
-                while ($row = $r->fetch_assoc()) {
-                    echo "<a href=" . 'Ratings.php?catid=' . $row['categoryId'] . " class='list-group-item'>" . $row['categoryName'] . "</a>";
-                }
-
-                ?>
-            </div>
 
         </div>
         <!-- /.col-lg-3 -->
@@ -101,21 +87,18 @@ if (!isset($_SESSION['username'])) {
 
                 <?php
                 require 'config.php';
-                $id = $_GET['catid'];
-                $sql = "SELECT * FROM equipments WHERE categoryId = '$id' AND equipStatus = 'Available' ";
+                $ayd = $_SESSION['ayd'];
+                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' AND rentals.status != 'Cancelled'";
                 $r = $con->query($sql);
 
                 if ($r->num_rows > 0) {
 
                     while ($row = $r->fetch_assoc()) {
                         $image = $row['equipimage'];
+
                         echo '
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100">
-                                    <br>
-                                       <div class="text-center"><button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
-                                            Ratings
-                                        </button></div>
                                     <br>
                                      ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
                                    <div class="card-body">
@@ -124,31 +107,45 @@ if (!isset($_SESSION['username'])) {
                                       </h4>
                                         <h5>' . $row['equipPrice'] . '</h5>
                                         <p class="card-text">' . $row['equipDesc'] . '</p>
+                                    </div>';
+
+                        if($row['st'] == 'Renting') {
+                            echo '
+                                    <div class="card-footer text-center">
+                                        <p class="card-text">' . $row['st'] . '</p>
+                                        <form action="cancelRent.php" method="post">
+                                            <input type="hidden" name="rentID" value="' . $row['id'] . '">
+                                            <button class="btn btn-danger" type="submit">Cancel</button>
+                                        </form>
+                                       
                                     </div>
-                                    <div class="card-footer"></div>
+                                    
+                                    
                                 </div>
                             </div>';
+                        }else{
+                            echo '
+                                    <div class="card-footer text-center">
+                                        <p class="card-text">' . $row['st'] . '</p>
+                                        <form action="cancelRent.php" method="post">
+                                            <input type="hidden" name="rentID" value="' . $row['id'] . '">
+                                        </form>
+                                       
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>';
+                        }
+
+
+
                     }
                 } else {
                     echo "No Data from Database";
                 }
                 ?>
 
-                <!--            <div class="col-lg-4 col-md-6 mb-4">-->
-                <!--              <div class="card h-100">-->
-                <!--                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
-                <!--                <div class="card-body">-->
-                <!--                  <h4 class="card-title">-->
-                <!--                    <a href="#">Item One</a>-->
-                <!--                  </h4>-->
-                <!--                  <h5>$24.99</h5>-->
-                <!--                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>-->
-                <!--                </div>-->
-                <!--                <div class="card-footer">-->
-                <!--                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>-->
-                <!--                </div>-->
-                <!--              </div>-->
-                <!--            </div>-->
 
 
             </div>
@@ -173,8 +170,8 @@ if (!isset($_SESSION['username'])) {
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form action="addRatings.php" method="post">
+    <div class="modal-dialog" role="document">
+        <form action="rent.php" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -182,48 +179,19 @@ if (!isset($_SESSION['username'])) {
                     </button>
                 </div>
                 <div class="text-center">
-                    <input id="ayd" type="hidden" class="form-control" name="ayd">
-                    <h5 class="modal-title" id="exampleModalLabel">Ratings</h5>
-                    <h2 id="rate"></h2>
-
+                    <h5 class="modal-title" id="exampleModalLabel">Duration</h5>
                 </div>
                 <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <th class="">Feedback</th>
-                            <th class="">Rate</th>
-                        </thead>
-                        <tbody id="tab">
-
-                        </tbody>
-                    </table>
-                    <hr>
-                    <div>
-                        <h3 class="text-center">Add Feedback</h3>
-                        <textarea class="form-control" name="feed" placeholder="Feedback message"></textarea>
-                        <br>
-                        <select class="form-control" required name="rating">
-                            <option selected disabled>Select Rating</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-
-                        </select>
-                    </div>
-
-
+                    <input type="number" class="form-control" name="dura" placeholder="Number of Days to rent">
+                    <input id="ayd" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Add Feedback">
+                    <input type="submit" class="btn btn-primary" value="Rent">
                 </div>
         </form>
     </div>
 </div>
-
-
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
@@ -235,47 +203,10 @@ if (!isset($_SESSION['username'])) {
     $(document).ready(function () {
         $('#exampleModal').on("show.bs.modal", function (ev) {
             let id = $(ev.relatedTarget).data('id');
-            console.log(id)
-
             $('#ayd').val(id);
-
-            getRate(id)
-
-
 
         })
     });
-
-    function getRate(x) {
-        $id = x;
-        $.ajax({
-            url: 'getRate.php',
-            data: {ayd: $id},
-            dataType: 'JSON',
-            success: function (data) {
-                if (!Array.isArray(data) || !data.length) {
-                    // array does not exist, is not an array, or is empty
-                    c = "<tr><td>No Feedback Yet</td></tr>";
-                    $('#tab').html(c);
-                    console.log("test")
-                } else {
-                    console.log(data);
-
-                    let a = '';
-                    let x = '';
-
-
-                    for (let i = 0; i < data.length; i++) {
-                        x += "<tr>" +
-                            "<td>" + data[i][3] + "</td>" +
-                            "<td>" + data[i][4] + " / 5</td>";
-                    }
-                    $('#tab').html(x);
-                }
-
-            }
-        });
-    }
 
 
 </script>
