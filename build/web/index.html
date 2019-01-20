@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <link rel="stylesheet" type="text/css" href="css/login.css">
+        <title>Administrator Login Page </title>
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <h1 class="display-1" id="header" style="text-align: center;">Construction Rental Management System</h1>
+                <h3 class="display-4" id="header" style="text-align: center;">Administrator Login</h3>
+            <div class="col-md-4 col-sm-2 col-xs-3"></div>
+                
+                <div class="col-md-4 col-sm-8 col-xs-6">
+                    <div class="panel panel-default">
+                        <form method="post" action="Login" name="checker">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label>Username </label>
+                                    <div class="icon-holder">
+                                        <input type="text" class="form-control" placeholder="Enter Username" name="username" maxlength="20" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <div class="icon-holder">
+                                        <input type="password" class="form-control" placeholder="Enter Password" name="password" minlength="8" maxlength="32" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <p> Forgot your password? <a href="forgotpassword.html">Click here.</a></p>
+                                <button class="btn btn-primary btn-block" type="submit">Login </button>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+              
+            <div class="col-md-4 col-sm-2 col-xs-3"></div>
+           
+            </div>
+          </div>
+    </body>
+
+</html>
