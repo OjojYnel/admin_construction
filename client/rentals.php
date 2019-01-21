@@ -107,7 +107,10 @@ if (!isset($_SESSION['username'])) {
                                       </h4>
                                         <h5>' . $row['equipPrice'] . '</h5>
                                         <p class="card-text">' . $row['equipDesc'] . '</p>
-                                    </div>
+                                    </div>';
+
+                        if($row['st'] != 'Renting') {
+                            echo '
                                     <div class="card-footer text-center">
                                         <p class="card-text">' . $row['st'] . '</p>
                                         <form action="cancelRent.php" method="post">
@@ -120,7 +123,20 @@ if (!isset($_SESSION['username'])) {
                                     
                                 </div>
                             </div>';
-
+                        }else{
+                            echo '
+                                    <div class="card-footer text-center">
+                                        <p class="card-text">' . $row['st'] . '</p>
+                                        <form action="cancelRent.php" method="post">
+                                            <input type="hidden" name="rentID" value="' . $row['id'] . '">
+                                        </form>
+                                       
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>';
+                        }
 
 
 
