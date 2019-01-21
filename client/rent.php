@@ -22,7 +22,7 @@ if(!isset($_SESSION['username'])){
 
     $dr = $_POST['dr'];
     $da = date("Y-m-d");
-    $nda = Date("y-m-d", strtotime("+" .$duration ." days"));
+    $nda = Date("y-m-d", strtotime($dr ." +" .$duration ." days"));
 
 
     $sql = "INSERT INTO rentals (userId, equipId, rental_date, return_date, duration) VALUES ('$user','$id','$dr','$nda','$duration')";
