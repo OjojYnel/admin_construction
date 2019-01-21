@@ -2,10 +2,7 @@
 include 'config.php';
 session_start();
 
-if (!isset($_SESSION['username'])) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
-}
+
 ?>
 
 
@@ -46,7 +43,9 @@ if (!isset($_SESSION['username'])) {
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <?php
+                if(isset($_SESSION['username'])){
+                    echo '<li class="nav-item">
                     <a class="nav-link" href="rentals.php">Rentals</a>
                 </li>
                 <li class="nav-item">
@@ -58,9 +57,29 @@ if (!isset($_SESSION['username'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="change_password.php">Change Password</a>
                 </li>
-                <li class="nav-item">
+                '
+                    ;
+                }
+
+                ?>
+
+
+                <?php
+
+                if (isset($_SESSION['username'])) {
+                    echo '<li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
+                </li>';
+                }else{
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="login.php">Login</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="registration.php">Register</a>
+                </li>';
+                }
+                ?>
+
             </ul>
         </div>
     </div>
@@ -102,6 +121,9 @@ if (!isset($_SESSION['username'])) {
                 <?php
                 require 'config.php';
                 $id = $_GET['catid'];
+                if (!isset($id)) {
+                    header('Location:index.php?catid=1');
+                }
                 $sql = "SELECT * FROM equipments WHERE categoryId = '$id' AND equipStatus = 'Available' ";
                 $r = $con->query($sql);
 
@@ -185,13 +207,20 @@ if (!isset($_SESSION['username'])) {
                     <h5 class="modal-title" id="exampleModalLabel">Duration</h5>
                 </div>
                 <div class="modal-body">
+                    <label>Date to Rent</label>
+                    <?php
+                    $da = date("Y-m-d");
+                    echo '<input type="date" min="' . $da .'" class="form-control" name="dr" placeholder="Date to Rent">';
+                    ?>
+
+                    <label>Duration of Rent</label>
                     <input type="number" class="form-control" name="dura" placeholder="Number of Days to rent">
                     <input id="ayd" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary" value="Rent">
-            </div>
+                </div>
         </form>
     </div>
 </div>

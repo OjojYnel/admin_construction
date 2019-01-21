@@ -53,7 +53,7 @@ if (!isset($_SESSION['username'])) {
                     <a class="nav-link" href="transactions.php?catid=1">Transactions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Ratings.php?catid=1">Transactions</a>
+                    <a class="nav-link" href="Ratings.php?catid=1">Ratings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="change_password.php">Change Password</a>

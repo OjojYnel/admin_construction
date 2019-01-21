@@ -60,7 +60,7 @@ include 'register_action.php';
             </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" onkeyup="checkUsername(this.value)" name="username" id="inputUsername" class="form-control" placeholder="Username" required="required">
+              <input type="text" onkeyup="checkUsername(this.value)" onfocusout="checkMin(this.value)" name="username" id="inputUsername" class="form-control" placeholder="Username" required="required">
                 <span id="err">A</span>
               <label for="inputUsername">Username</label>
             </div>
@@ -74,7 +74,7 @@ include 'register_action.php';
             <div class="form-row">
               <div class="col-md-6">
                 <div class="form-label-group">
-                  <input type="password" name="password_1" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                  <input type="password" onkeyup="checkPass(this.value)" onfocusout="checkMin2(this.value)" name="password_1" id="inputPassword" class="form-control" placeholder="Password" required="required">
                   <label for="inputPassword">Password</label>
                 </div>
               </div>
@@ -106,11 +106,39 @@ include 'register_action.php';
 <script>
     function checkUsername(x) {
         y = x.length;
-        console.log(y)
         document.getElementById("err").value = x
-        if (x === 21){
-            alert("Username must not exceed 21 characters")
+        if (y === 21){
+
         }
+    }
+
+    function checkMin(x) {
+        y = x.length;
+        console.log(y)
+        if (y < 8){
+            alert("Username must exceed 8 characters!");
+        }
+
+    }
+
+    function checkMin2(x) {
+        y = x.length;
+        console.log(y)
+        if (y < 8){
+            alert("Password must exceed 8 characters!");
+        }
+
+    }
+
+    function checkPass(x) {
+        y = x.length;
+        console.log(y)
+
+
+        if (y === 32){
+            alert("Password must not exceed 32 characters!");
+        }
+
     }
 
 

@@ -1,5 +1,5 @@
 <?php
-$con=mysqli_connect ("localhost", "root", "toor","construction");
+$con=mysqli_connect ("localhost", "root", "","construction");
 if($con === false){
 	die("ERROR: Could not connect. " . mysqli_connect_error());
 }if(!$con){
