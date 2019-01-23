@@ -26,6 +26,7 @@ session_start();
 
 </head>
 
+
 <body>
 
 <div class="modal fade " id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -70,6 +71,21 @@ session_start();
             Search
         </button>
 
+<<<<<<< HEAD
+=======
+     
+<!--     
+                <li class="nav-item">
+                <form class="form-header" action="search.php" method="POST">
+                                <input class="au-input au-input--xl" type="text" placeholder="Search equipments...">
+                                <button class="au-btn--submit" value="submit" type="submit">
+                                    <i class="icon"></i>
+                                </button>
+                            </form>
+                </li> -->
+
+
+>>>>>>> origin/master
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
@@ -77,6 +93,7 @@ session_start();
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
+                
                 <?php
                 if(isset($_SESSION['username'])){
                     echo '<li class="nav-item">
@@ -248,7 +265,7 @@ session_start();
                     ?>
 
                     <label>Duration of Rent</label>
-                    <input type="number" class="form-control" name="dura" placeholder="Number of Days to rent">
+                    <input type="number" onkeyup="checkdura(this.value)" class="form-control" name="dura" min=1  placeholder="Number of Days to rent">
                     <input id="ayd" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
@@ -279,6 +296,17 @@ session_start();
         })
     });
 
+</script>
+
+<script>
+  function checkdura(x) {
+        y = x.length;
+        document.getElementById("err").value = x
+        if (y === 0){
+          alert("Please a valid duration!");
+
+        }
+    }
 
 </script>
 
