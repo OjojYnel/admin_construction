@@ -89,7 +89,7 @@ include 'register_action.php';
           <button class="btn btn-primary btn-block" name="reg_user" type="submit">Register</button>
         </form>
         <div class="text-center">
-          <a class="d-block small mt-3" href="login.php">Already have an Account?</a>
+          <a class="d-block small mt-3" href="../login.php">Already have an Account?</a>
         </div>
       </div>
     </div>

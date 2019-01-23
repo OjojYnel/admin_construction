@@ -28,14 +28,48 @@ session_start();
 
 <body>
 
+<div class="modal fade " id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="text-center">
+                <br>
+                <h5 class="modal-title">Result</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-4" id="result">
+                <table class="table">
+                    <thead>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Engine Number</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#">Construction Rentals</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <input type="text" style="width: 20%" id="search" placeholder="Search Equipment" class="form-control">
+        &nbsp;
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal5">
+            Search
         </button>
+
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
@@ -72,7 +106,7 @@ session_start();
                 </li>';
                 }else{
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="login.php">Login</a>
+                    <a class="nav-link" href="../index.php">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="registration.php">Register</a>
@@ -225,11 +259,15 @@ session_start();
     </div>
 </div>
 
+
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Main JS-->
+<script src="search.js"></script>
 
 </body>
+
 
 <script>
     $(document).ready(function () {
@@ -243,5 +281,20 @@ session_start();
 
 
 </script>
+
+<style>
+    .modal-full {
+        min-width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .modal-full .modal-content {
+        min-height: 60vh;
+    }
+</style>
+
+
+
 
 </html>
