@@ -8,7 +8,9 @@ $(document).ready(function () {
 
             url:"search.php?se=" + x,
             dataType: 'JSON',
+
             success: function(data){
+                let c = '';
                 if (!Array.isArray(data) || !data.length) {
                     // array does not exist, is not an array, or is empty
                     c = "<tr><td>No Result</td></tr>";
