@@ -82,7 +82,7 @@ if (isset($_POST['login_user'])) {
           $_SESSION['username'] = $username;
           $_SESSION['ayd'] = $row['userid'];
           $_SESSION['success'] = "You are now logged in";
-          header('location: index.php?catid=1');
+          header('location: login.php?catid=1');
       }else{
           $m = "Please Contact Admin for activation!";
           echo "<script type='text/javascript'>

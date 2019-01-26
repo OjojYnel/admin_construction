@@ -26,31 +26,39 @@ if (password_verify($pass, $r[2]) && $r[4] != 'pending') {
             $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
             $_SESSION['userType'] = $r[3];
             $_SESSION['ayd'] = $r[5];
-            header('Location://localhost:8080/admin/dashboard.jsp?ayd=' . $_SESSION['ayd']);
+            header('Location://localhost/admin_construction/dashboard.jsp?ayd=' . $_SESSION['ayd']);
         } elseif ($r[3] == "Client") {
             $_SESSION['username'] = $user;
             $_SESSION['ayd'] = $r[5];
-            header('Location:../client/index.php?catid=1');
-        } elseif ($r[3] == "client") {
+            header('Location:../index.php?catid=1');
+        } elseif ($r[3] == "Admin") {
             $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
             $_SESSION['userType'] = $r[3];
             $_SESSION['ayd'] = $r[5];
-            header('Location: //' . $ayp . ':3000/index/' . $_SESSION['ayd']);
+            header('Location://localhost:8080/sp/index.jsp?ayd=' . $_SESSION['ayd']);
         } else {
             $m = "Error login, Unknown user type! Contact Administrator";
             echo "
             <script type = 'text/javascript'>
                 alert('$m');
-                window.location.replace('../index.php');
+                window.location.replace(login.php);
             </script>
          ";
         }
-    } else {
+    }elseif ($res->num_rows > 0 && $r[4] == 'Pending'){
+        $m = "Account is Pending! Please contact administrator";
+        echo "
+            <script type = 'text/javascript'>
+                alert('$m');
+                window.location.replace('../login.php');
+            </script>
+         ";
+    }else {
         $m = "Account is Disabled! Please contact administrator";
         echo "
             <script type = 'text/javascript'>
                 alert('$m');
-                window.location.replace('../index.php');
+                window.location.replace('../login.php');
             </script>
          ";
 
@@ -60,7 +68,7 @@ if (password_verify($pass, $r[2]) && $r[4] != 'pending') {
     echo "
             <script type = 'text/javascript'>
                 alert('$m');
-                window.location.replace('../index.php');
+                window.location.replace('../login.php');
             </script>
          ";
 }else {
@@ -68,7 +76,7 @@ if (password_verify($pass, $r[2]) && $r[4] != 'pending') {
     echo "
             <script type = 'text/javascript'>
                 alert('$m');
-                window.location.replace('../index.php');
+                window.location.replace(login.php);
             </script>
          ";
 }

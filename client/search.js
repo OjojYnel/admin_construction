@@ -1,12 +1,12 @@
 $(document).ready(function () {
 
-    $("#exampleModal5").on("show.bs.modal",function () {
+    $("#sear").on("click",function () {
         let x = $('#search').val()
         console.log(x)
 
         $.ajax({
 
-            url:"search.php?se=" + x,
+            url:"client/search.php?se=" + x,
             dataType: 'JSON',
 
             success: function(data){
@@ -17,26 +17,28 @@ $(document).ready(function () {
                     $('#tbody').html(c);
                 }else {
                     let dat = '';
-                    let da = '';
-                    console.log(data)
-                    for (let i = 0; i < data.length; i++) {
 
-                        if (data[i][4] !== 'Rented'){
-                            da = "<td><button data-id='" + data[i][5]  + "' type='button' class='btn btn-primary'  data-toggle='modal' data-target='#exampleModal'>Rent</button></td></tr>";
-                        } else {
-                            da = "<td>Not Available</td></tr>";
-                        }
-                        
-                        dat += "<tr>" +
-                            "<td>" + data[i][0] + "</td>" +
-                            "<td>" + data[i][1] + "</td>" +
-                            "<td>" + data[i][2] + "</td>" +
-                            "<td>" + data[i][3] + "</td>" +
-                            "<td>" + data[i][4] + "</td>" + da;
-                            
+                    for (let i = 0; i < data.length; i++) {
+                    dat += '<div class="col-lg-4 col-md-6 mb-4">' +
+                            '<div class="card h-100"><br>' +
+                            '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
+                            'Rent' +
+                            '</button></div><br>' +
+                            '<div class="card-body">' +
+                            '<h4 class="card-title">' +
+                            '<a href="#">' + data[i][1] + '</a>' +
+                        '</h4>' +
+                        '<h5>' + data[i][2] + '</h5>' +
+                        '<p class="card-text">' + data[i][3] + '</p>' +
+                        '</div>' +
+                        '<div class="card-footer"></div>' +
+                            '</div>' +
+                            '</div>';
+
+                    console.log(dat)
 
                     }
-                    $('#tbody').html(dat);
+                    $('#dito').html(dat);
                 }
             }
         })

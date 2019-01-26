@@ -45,7 +45,7 @@ if ($user)
         echo 'Password, Not Changed';
       } 
       
-      header('location: index.php');
+      header('location: index.jsp');
       
     }
   }

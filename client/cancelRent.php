@@ -14,7 +14,7 @@ if($con->query($sql)){
     echo "<script type='text/javascript'>
 
             alert('$m');
-            window.location.replace('index.php?catid=1');
+            window.location.replace('index.jsp?catid=1');
         </script>";
 }else{
     var_dump($con->error);

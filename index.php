@@ -1,180 +1,304 @@
+<?php
+include 'php/config.php';
+session_start();
+$id = $_GET['catid'];
+if (!isset($id)) {
+    header('Location:index.php?catid=1');
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Login V6</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="assets/images/icons/favicon.ico"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/fonts/iconic/css/material-design-iconic-font.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/util.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
-    <!--===============================================================================================-->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Construction</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="client/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="client/css/shop-homepage.css" rel="stylesheet">
+
 </head>
+
+
 <body>
 
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100 p-t-85 p-b-20">
-            <form class="login100-form validate-form" action="php/login.php" method="post">
+<div class="modal fade " id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="text-center">
+                <br>
+                <h5 class="modal-title">Result</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-4" id="result">
+                <table class="table">
+                    <thead>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Engine Number</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody id="tbody">
 
-                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
-                    <input class="input100" type="text" name="username">
-                    <span class="focus-input100" data-placeholder="Username"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-                    <input class="input100" type="password" name="password">
-                    <span class="focus-input100" data-placeholder="Password"></span>
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
-                        Login
-                    </button>
-                </div>
-
-                <ul class="login-more p-t-50">
-
-                    <li>
-							<span class="txt1">
-								Don’t have an account?
-							</span>
-
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" x>
-                            Sign up
-                        </button>
-                    </li>
-                </ul>
-            </form>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Construction Rentals</a>
+        <input type="text" style="width: 20%" id="search" placeholder="Search Equipment" class="form-control">
+        &nbsp;
+        <button id="sear" type="button" class="btn btn-primary">
+            Search
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.php?catid=1">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                
+                <?php
+                if(isset($_SESSION['username'])){
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="client/rentals.php">Rentals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="client/transactions.php?catid=1">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="client/Ratings.php?catid=1">Ratings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="client/change_password.php">Change Password</a>
+                </li>
+                '
+                    ;
+                }
+
+                ?>
+
+
+                <?php
+
+                if (isset($_SESSION['username'])) {
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="client/logout.php">Logout</a>
+                </li>';
+                }else{
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="login.php">Login</a>
+                </li>';
+                }
+                ?>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">Categories</h1>
+            <div class="list-group">
+                <a name=""></a>
+
+                <?php
+                require 'php/config.php';
+
+                $sql = "SELECT * FROM categories";
+                $r = $conn->query($sql);
+
+                while ($row = $r->fetch_assoc()) {
+                    echo "<a href=" . 'index.jsp?catid=' . $row['categoryId'] . " class='list-group-item'>" . $row['categoryName'] . "</a>";
+                }
+
+                ?>
+            </div>
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div id="dito" class="col-lg-9">
+
+            <br>
+
+            <div class="row">
+
+                <?php
+                require 'php/config.php';
+                $id = $_GET['catid'];
+
+                $sql = "SELECT * FROM equipments WHERE categoryId = '$id' AND equipStatus = 'Available' ";
+                $r = $conn->query($sql);
+
+                if ($r->num_rows > 0) {
+
+                    while ($row = $r->fetch_assoc()) {
+                        $image = $row['equipimage'];
+                        echo '
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <br>
+                                       <div class="text-center"><button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
+                                            Rent
+                                        </button></div>
+                                    <br>
+                                     ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
+                                   <div class="card-body">
+                                     <h4 class="card-title">
+                                        <a href="#">' . $row['equipName'] . '</a>
+                                      </h4>
+                                        <h5>' . $row['equipPrice'] . '</h5>
+                                        <p class="card-text">' . $row['equipDesc'] . '</p>
+                                    </div>
+                                    <div class="card-footer"></div>
+                                </div>
+                            </div>';
+                    }
+                } else {
+                    echo "No Data from Database";
+                }
+                ?>
+
+                <!--            <div class="col-lg-4 col-md-6 mb-4">-->
+                <!--              <div class="card h-100">-->
+                <!--                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+                <!--                <div class="card-body">-->
+                <!--                  <h4 class="card-title">-->
+                <!--                    <a href="#">Item One</a>-->
+                <!--                  </h4>-->
+                <!--                  <h5>$24.99</h5>-->
+                <!--                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>-->
+                <!--                </div>-->
+                <!--                <div class="card-footer">-->
+                <!--                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>-->
+                <!--                </div>-->
+                <!--              </div>-->
+                <!--            </div>-->
+
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form action="php/register.php" method="post">
+    <div class="modal-dialog" role="document">
+        <form action="client/rent.php" method="post">
             <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <h5 class="modal-title" id="exampleModalLabel">Duration</h5>
+                </div>
                 <div class="modal-body">
-                    <div class="content">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-header card-header-primary">
-                                            <h4 class="card-title text-center">Signup</h4>
-                                        </div>
-                                        <div class="card-body">
+                    <label>Date to Rent</label>
+                    <?php
+                    $da = date("Y-m-d");
+                    echo '<input type="date" min="' . $da .'" class="form-control" name="dr" placeholder="Date to Rent">';
+                    ?>
 
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">First Name</label>
-                                                        <input required type="text" name="fname" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">Last Name</label>
-                                                        <input required type="text" name="lname" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">Email</label>
-                                                        <input required type="email" name="eml" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">Contact Number</label>
-                                                        <input required type="number" name="num" min="10"
-                                                               class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">Username</label>
-                                                        <input required type="text" min="8" name="username" max="22"
-                                                               class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">Password</label>
-                                                        <input required type="password" min="8" name="pass"
-                                                               class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="bmd-label-floating">Confirm Password</label>
-                                                        <input required type="password" min="8" name="pass2"
-                                                               class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <label>Duration of Rent</label>
+                    <input type="number" onkeyup="checkdura(this.value)" class="form-control" name="dura" min=1  placeholder="Number of Days to rent">
+                    <input id="ayd" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="submit" class="btn btn-primary" value="Rent">
                 </div>
         </form>
     </div>
 </div>
-</div>
 
 
-<div id="dropDownSelect1"></div>
 
-<!--===============================================================================================-->
-<script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-<script src="assets/vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-<script src="assets/vendor/bootstrap/js/popper.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-<script src="assets/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-<script src="assets/vendor/daterangepicker/moment.min.js"></script>
-<script src="assets/vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-<script src="assets/vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-<script src="assets/js/main.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script src="client/vendor/jquery/jquery.min.js"></script>
+<script src="client/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Main JS-->
+<script src="client/search.js"></script>
 
 </body>
+
+
+<script>
+    $(document).ready(function () {
+        $('#exampleModal').on("show.bs.modal", function (ev) {
+            let id = $(ev.relatedTarget).data('id');
+            console.log(id)
+            $('#ayd').val(id);
+
+        })
+    });
+
+</script>
+
+<script>
+  function checkdura(x) {
+        y = x.length;
+        document.getElementById("err").value = x
+        if (y === 0){
+          alert("Please a valid duration!");
+
+        }
+    }
+
+</script>
+
+
+
+
+
+
 </html>
