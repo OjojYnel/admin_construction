@@ -125,7 +125,6 @@
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">User Type</label>
                                                         <select name="ty" class="form-control">
-                                                            <option value="Admin">Service Provider</option>
                                                             <option value="Client">Client</option>
                                                         </select>
                                                     </div>

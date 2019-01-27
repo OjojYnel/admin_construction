@@ -26,16 +26,19 @@ if (password_verify($pass, $r[2]) && $r[4] != 'pending') {
             $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
             $_SESSION['userType'] = $r[3];
             $_SESSION['ayd'] = $r[5];
-            header('Location://localhost/admin_construction/dashboard.jsp?ayd=' . $_SESSION['ayd']);
+            $_SESSION['ty'] = $r[3];
+            header('Location://localhost:8080/admin/admin/dashboard.jsp?ayd=' . $_SESSION['ayd']);
         } elseif ($r[3] == "Client") {
             $_SESSION['username'] = $user;
             $_SESSION['ayd'] = $r[5];
+            $_SESSION['ty'] = $r[3];
             header('Location:../index.php?catid=1');
         } elseif ($r[3] == "Admin") {
             $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
             $_SESSION['userType'] = $r[3];
             $_SESSION['ayd'] = $r[5];
-            header('Location://localhost:8080/sp/index.jsp?ayd=' . $_SESSION['ayd']);
+            $_SESSION['ty'] = $r[3];
+            header('Location://localhost:8080/admin/sp/index.jsp?ayd=' . $_SESSION['ayd']);
         } else {
             $m = "Error login, Unknown user type! Contact Administrator";
             echo "
@@ -76,7 +79,7 @@ if (password_verify($pass, $r[2]) && $r[4] != 'pending') {
     echo "
             <script type = 'text/javascript'>
                 alert('$m');
-                window.location.replace(login.php);
+                window.location.replace('../login.php');
             </script>
          ";
 }
