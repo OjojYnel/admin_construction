@@ -444,7 +444,7 @@ if(request.getParameter("ayd") != null){
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <select name="catid" class="form-control">
+                                                        <select required name="catid" class="form-control">
                                                             <%
                                                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction","root","");
                                                 st = con.createStatement();
