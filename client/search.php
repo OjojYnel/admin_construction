@@ -5,7 +5,7 @@ $x = $_GET['se'];
 
 
 
-$sql = "SELECT equipId,equipName,equipPrice,equipDesc FROM equipments WHERE equipName LIKE '%". $x . "%'";
+$sql = "SELECT equipId,equipName,equipPrice,equipDesc,equipStatus FROM equipments WHERE equipName LIKE '%". $x . "%' AND equipStatus = 'Available'";
 $res = $con->query($sql);
 
 $r = $res->fetch_all();

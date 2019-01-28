@@ -13,9 +13,6 @@ $pass2 = $_POST['pass2'];
 $ty = $_POST['ty'];
 $st = 'Pending';
 
-if(!empty($t)){
-    $st = 'Active';
-}
 
 if ($pass == $pass2) {
     $p = password_hash($pass, PASSWORD_DEFAULT);

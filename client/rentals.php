@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])) {
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item ">
-                    <a class="nav-link" href="index.php?catid=1">Home
+                    <a class="nav-link" href="../index.php?catid=1">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -88,7 +88,7 @@ if (!isset($_SESSION['username'])) {
                 <?php
                 require 'config.php';
                 $ayd = $_SESSION['ayd'];
-                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' AND rentals.status != 'Cancelled'";
+                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' AND rentals.status != 'Cancelled' AND rentals.status != 'Finished' ";
                 $r = $con->query($sql);
 
                 if ($r->num_rows > 0) {

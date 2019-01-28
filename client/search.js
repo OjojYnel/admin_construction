@@ -17,13 +17,22 @@ $(document).ready(function () {
                     $('#tbody').html(c);
                 }else {
                     let dat = '';
+                    let da = '';
 
                     for (let i = 0; i < data.length; i++) {
+                        if (data[i][5] === 'Available') {
+                            da = '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
+                                'Rent</button>';
+                        }else{
+                            da = '<a></a>';
+                        }
+                        
+                        
                     dat += '<div class="col-lg-4 col-md-6 mb-4">' +
                             '<div class="card h-100"><br>' +
-                            '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
-                            'Rent' +
-                            '</button></div><br>' +
+                        da
+                             +
+                            '</div><br>' +
                             '<div class="card-body">' +
                             '<h4 class="card-title">' +
                             '<a href="#">' + data[i][1] + '</a>' +

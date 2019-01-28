@@ -108,7 +108,7 @@ if (!isset($id)) {
 
                 if (isset($_SESSION['username'])) {
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="client/logout.php">Logout</a>
+                    <a class="nav-link" href="php/logout.php">Logout</a>
                 </li>';
                 }else{
                     echo '<li class="nav-item">
@@ -140,7 +140,7 @@ if (!isset($id)) {
                 $r = $conn->query($sql);
 
                 while ($row = $r->fetch_assoc()) {
-                    echo "<a href=" . 'index.jsp?catid=' . $row['categoryId'] . " class='list-group-item'>" . $row['categoryName'] . "</a>";
+                    echo "<a href=" . 'index.php?catid=' . $row['categoryId'] . " class='list-group-item'>" . $row['categoryName'] . "</a>";
                 }
 
                 ?>
