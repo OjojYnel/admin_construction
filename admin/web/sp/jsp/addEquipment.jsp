@@ -45,7 +45,7 @@
 
     
 
-    String sql2 = "INSERT INTO equipments(spid,equipName,equipDesc,manufacId,equipEngineNumber,equipPrice,categoryId,equipStatus,equipimage,status) VALUES(?,?,?,?,?,?,?,?,?,?)";
+    String sql2 = "INSERT INTO equipments(spid,equipName,equipDesc,manufacId,equipEngineNumber,equipPrice,categoryId,equipStatus,equipimage) VALUES(?,?,?,?,?,?,?,?,?)";
     ps = con.prepareStatement(sql2);
     ps.setInt(1, aydd);
     ps.setString(2, equipname);
@@ -56,7 +56,6 @@
     ps.setString(7, catid);
     ps.setString(8, "Available");
     ps.setString(9, eimage);
-    ps.setString(10, "enabled");
     ps.executeUpdate();
 
     out.println("<script type=\"text/javascript\">");
