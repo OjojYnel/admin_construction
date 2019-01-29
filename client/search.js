@@ -8,6 +8,7 @@ $(document).ready(function () {
 
             url:"client/search.php?se=" + x,
             dataType: 'JSON',
+            processData: false,
 
             success: function(data){
                 let c = '';

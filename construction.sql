@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 28, 2019 at 12:19 AM
+-- Generation Time: Jan 29, 2019 at 11:04 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -68,11 +68,11 @@ CREATE TABLE IF NOT EXISTS `equipments` (
   `equipPrice` decimal(10,2) NOT NULL,
   `categoryId` smallint(6) NOT NULL,
   `equipStatus` enum('Available','Unavailable','Rented') NOT NULL,
-  `equipimage` blob,
+  `equipimage` longblob,
   PRIMARY KEY (`equipId`),
   KEY `manufacID` (`manufacId`),
   KEY `catId` (`categoryId`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `manufacturers` (
   `manufacAddress` varchar(150) DEFAULT NULL,
   `manufacContactNum` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`manufacId`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `rentals` (
   KEY `client_id` (`userId`),
   KEY `flower_id` (`equipId`),
   KEY `ordStatus` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `transactionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`transactId`),
   KEY `userid` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`userid`),
   UNIQUE KEY `username` (`username`),
   KEY `date_created` (`date_created`,`user_type`,`account_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
