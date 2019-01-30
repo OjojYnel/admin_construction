@@ -11,7 +11,6 @@ $(document).ready(function () {
             processData: false,
 
             success: function(data){
-                console.log(data[0][5]);
                 let c = '';
                 if (!Array.isArray(data) || !data.length) {
                     // array does not exist, is not an array, or is empty
