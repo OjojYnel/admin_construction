@@ -171,7 +171,7 @@
                                                         Statement st = con.createStatement();
                                                         Integer ayd = (Integer) session.getAttribute("ayd");
                                                         ResultSet rs = st.executeQuery("SELECT * FROM equipments JOIN manufacturers ON equipments.manufacId=manufacturers.manufacId WHERE equipStatus !='Unavailable' AND  spid = '" + ayd + "'");
-                                                        
+
                                                         if (!rs.next()) {
                                                             out.print("<tr><td>No records</td></tr>");
                                                         } else {
@@ -185,21 +185,24 @@
                                                                 out.println("</td><td>" + rs.getString("equipStatus"));
 
                                                                 if (rs.getString("equipimage") == null) {
-                                                                    
-                                                                      out.println("</td><td><form name='frm'" +  "action='jsp/up.jsp?num=" + rs.getInt("equipId")  + "' enctype='multipart/form-data' method='post'>");
-                                                                      out.println("<input type='file' name='uProperty' />");
-                                                    out.println("<input type='submit' class='btn btn-success' name='goUpload' value='Upload' />");
-                                                out.println("</form>");
-                                                                    
-                                                                    //out.println("<td><button class='btn btn-success' data-toggle='modal' data-target='#exampleModal5' data-id='" + rs.getInt("equipId") + "'>Add Image</button></td>");
 
+                                                                    out.println("</td><td><form name='frm'" + "action='jsp/up.jsp?num=" + rs.getInt("equipId") + "' enctype='multipart/form-data' method='post'>");
+                                                                    out.println("<input type='file' name='uProperty' />");
+                                                                    out.println("<input type='submit' class='btn btn-success' name='goUpload' value='Upload' />");
+                                                                    out.println("</form>");
+
+                                                                    //out.println("<td><button class='btn btn-success' data-toggle='modal' data-target='#exampleModal5' data-id='" + rs.getInt("equipId") + "'>Add Image</button></td>");
                                                                 } else {
-                                                                        byte[] img = rs.getBytes("equipimage"); // blob field 
-                                                                        String en = Base64.getEncoder().encodeToString(img);
+                                                                    byte[] img = rs.getBytes("equipimage"); // blob field 
+                                                                    String en = Base64.getEncoder().encodeToString(img);
                                                                     out.println("</td><td><img width='193' height='130'  src='data:image/jpeg;base64," + en + "'>");
+                                                                    out.println("<form name='frm'" + "action='jsp/up.jsp?num=" + rs.getInt("equipId") + "' enctype='multipart/form-data' method='post'>");
+                                                                    out.println("<input type='file' name='uProperty' />");
+                                                                    out.println("<input type='submit' class='btn btn-success' name='goUpload' value='Upload' />");
+                                                                    out.println("</form>");
                                                                 }
 
-                                                                out.println("</td><td>" + "<a href='jsp/disable.jsp?rid=" + rs.getInt("equipId") + "' class='btn btn-success'><i class='material-icons'>close</i></a></td>");
+                                                                out.println("</td><td>" + "<a href='jsp/disable.jsp?rid=" + rs.getInt("equipId") + "' class='btn btn-success'><i class='material-icons'>close</i></a><a href='test.jsp?num=" + rs.getInt("equipId") + "' class='btn btn-success me'><i class='material-icons'>edit</i></a></td>");
                                                                 out.println("</td></tr>");
 
                                                             }
@@ -207,7 +210,7 @@
                                                     %>
                                                 </tbody>
                                             </table>
-                                            <button class="btn btn-success pull-right" data-toggle="modal" data-target="#exampleModal" x>
+                                            <button class="btn btn-success pull-right" data-toggle="modal" data-target="#exampleModal">
                                                 Add Equipment
                                             </button>
                                         </div>
@@ -242,52 +245,52 @@
                                                     Status
                                                 </th>
                                                 <th>
-                                                                                                    Image
-                                                                                                </th>
+                                                    Image
+                                                </th>
                                                 <th>
                                                     Action
                                                 </th>
                                                 </thead>
                                                 <tbody>
                                                     <%
-                                                                                                             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction", "root", "");
-                                                                                                             st = con.createStatement();
-                                                                                                             ayd = (Integer) session.getAttribute("ayd");
-                                                                                                             rs = st.executeQuery("SELECT * FROM equipments JOIN manufacturers ON equipments.manufacId=manufacturers.manufacId WHERE equipStatus !='Available' AND  spid = '" + ayd + "'");
+                                                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction", "root", "");
+                                                        st = con.createStatement();
+                                                        ayd = (Integer) session.getAttribute("ayd");
+                                                        rs = st.executeQuery("SELECT * FROM equipments JOIN manufacturers ON equipments.manufacId=manufacturers.manufacId WHERE equipStatus !='Available' AND  spid = '" + ayd + "'");
 
-                                                                                                            if (!rs.next()) {
-                                                                                                                out.print("<tr><td>No records</td></tr>");
-                                                                                                            } else {
-                                                                                                                rs.beforeFirst();
-                                                                                                                while (rs.next()) {
-                                                                                                                    out.println("<tr><td>" + rs.getString("equipName"));
-                                                                                                                    out.println("</td><td>" + rs.getString("equipDesc"));
-                                                                                                                    out.println("</td><td>" + rs.getString("manufacturers.manufacCompany"));
-                                                                                                                    out.println("</td><td>" + rs.getString("equipEngineNumber"));
-                                                                                                                    out.println("</td><td>" + rs.getInt("equipPrice"));
-                                                                                                                    out.println("</td><td>" + rs.getString("equipStatus"));
+                                                        if (!rs.next()) {
+                                                            out.print("<tr><td>No records</td></tr>");
+                                                        } else {
+                                                            rs.beforeFirst();
+                                                            while (rs.next()) {
+                                                                out.println("<tr><td>" + rs.getString("equipName"));
+                                                                out.println("</td><td>" + rs.getString("equipDesc"));
+                                                                out.println("</td><td>" + rs.getString("manufacturers.manufacCompany"));
+                                                                out.println("</td><td>" + rs.getString("equipEngineNumber"));
+                                                                out.println("</td><td>" + rs.getInt("equipPrice"));
+                                                                out.println("</td><td>" + rs.getString("equipStatus"));
 
-                                                                                                                    if (rs.getString("equipimage") == null) {
+                                                                if (rs.getString("equipimage") == null) {
 
-                                                                                                                          out.println("</td><td><form name='frm'" +  "action='jsp/up.jsp?num=" + rs.getInt("equipId")  + "' enctype='multipart/form-data' method='post'>");
-                                                                                                                          out.println("<input type='file' name='uProperty' />");
-                                                                                                        out.println("<input type='submit' class='btn btn-success' name='goUpload' value='Upload' />");
-                                                                                                    out.println("</form>");
+                                                                    out.println("</td><td><form name='frm'" + "action='jsp/up.jsp?num=" + rs.getInt("equipId") + "' enctype='multipart/form-data' method='post'>");
+                                                                    out.println("<input type='file' name='uProperty' />");
+                                                                    out.println("<input type='submit' class='btn btn-success' name='goUpload' value='Upload' />");
+                                                                    out.println("</form>");
 
-                                                                                                                        //out.println("<td><button class='btn btn-success' data-toggle='modal' data-target='#exampleModal5' data-id='" + rs.getInt("equipId") + "'>Add Image</button></td>");
+                                                                    //out.println("<td><button class='btn btn-success' data-toggle='modal' data-target='#exampleModal5' data-id='" + rs.getInt("equipId") + "'>Add Image</button></td>");
+                                                                } else {
+                                                                    byte[] img = rs.getBytes("equipimage"); // blob field
+                                                                    String en = Base64.getEncoder().encodeToString(img);
+                                                                    out.println("</td><td><img width='193' height='130'  src='data:image/jpeg;base64," + en + "'>");
+                                                                    
+                                                                }
 
-                                                                                                                    } else {
-                                                                                                                            byte[] img = rs.getBytes("equipimage"); // blob field
-                                                                                                                            String en = Base64.getEncoder().encodeToString(img);
-                                                                                                                        out.println("</td><td><img width='193' height='130'  src='data:image/jpeg;base64," + en + "'>");
-                                                                                                                    }
+                                                                out.println("</td><td>" + "<a href='jsp/enable.jsp?rid=" + rs.getInt("equipId") + "' class='btn btn-success'><i class='material-icons'>done</i></a></td>");
+                                                                out.println("</td></tr>");
 
-                                                                                                                    out.println("</td><td>" + "<a href='jsp/disable.jsp?rid=" + rs.getInt("equipId") + "' class='btn btn-success'><i class='material-icons'>close</i></a></td>");
-                                                                                                                    out.println("</td></tr>");
-
-                                                                                                                }
-                                                                                                            }
-                                                                                                        %>
+                                                            }
+                                                        }
+                                                    %>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -532,7 +535,21 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="jsp/edit.jsp" method="post">
+                <div class="modal-content">
+
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form action="jsp/up.jsp" method="post">
@@ -544,7 +561,7 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-header card-header-primary">
-                                                <h4 class="card-title text-center">Upload Image</h4>
+                                                <h4 class="card-title text-center">Edit Profile</h4>
                                             </div>
                                             <div class="card-body">
 
@@ -611,9 +628,24 @@
 <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
 
 <script>
-                            $(document).ready(function () {
-                                $('#example').DataTable();
-                            });
+                                $(document).ready(function () {
+                                    $('#example').DataTable();
+                                });
+
+                                $('.me').on('click', function (e) {
+                                    e.preventDefault();
+                                    $('#exampleModal2').modal('show').find('.modal-content').load($(this).attr('href'));
+                                });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#exampleModal2').on("show.bs.modal", function (ev) {
+            let id = $(ev.relatedTarget).data('id');
+            $('#ayd').val(id);
+
+        })
+    });
+
 </script>
 </body>
 
