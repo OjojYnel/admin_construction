@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login V6</title>
+    <title>iConstruct</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -108,17 +108,20 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">Contact Number</label>
-                                                        <input required type="number" name="num" min="10"
-                                                               class="form-control">
+              <input type="number" onkeyup="checkNum(this.value)" name="num" id="inputcontactnum" class="form-control" maxlength="21" required="required">
+              <span id="err"></span>
+
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Username</label>
-                                                        <input required type="text" min="8" name="username" max="22"
-                                                               class="form-control">
+                                                    <div class="form-label-group">
+              <input type="text" onkeyup="checkUsername(this.value)" onfocusout="checkMin(this.value)" name="username" id="inputUsername" class="form-control" placeholder="Username" maxlength="21" required="required">
+                <span id="err"></span>
+            </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -133,16 +136,16 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Password</label>
-                                                        <input required type="password" min="8" name="pass"
-                                                               class="form-control">
+                                                    <div class="form-label-group">
+                  <input type="password" onkeyup="checkPass(this.value)" onfocusout="checkMin2(this.value)" name="pass" id="inputPassword" class="form-control" placeholder="Password" maxlength="33" required="required">
+                </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Confirm Password</label>
-                                                        <input required type="password" min="8" name="pass2"
-                                                               class="form-control">
+                                                    <div class="form-label-group">
+                  <input type="password" onkeyup="checkPass(this.value)" onfocusout="checkMin2(this.value)" name="pass2" id="confirmPassword" class="form-control" placeholder="Confirm password" maxlength="33" required="required">
+                </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,4 +187,55 @@
 <script src="assets/js/main.js"></script>
 
 </body>
+<script>
+    function checkUsername(x) {
+        y = x.length;
+        document.getElementById("err").value = x
+        if (y === 21){
+          alert("Username must not exceed 20 characters!");
+
+        }
+    }
+
+    function checkNum(x) {
+        y = x.length;
+        document.getElementById("err").value = x
+        if (y === 21){
+          alert("Contact number must not exceed 20 characters!");
+
+        }
+    }
+
+    // function checkMin(x) {
+    //     y = x.length;
+    //     console.log(y)
+    //     if (y < 8){
+    //         alert("Username must exceed 8 characters!");
+    //     }
+
+    // }
+
+    // function checkMin2(x) {
+    //     y = x.length;
+    //     console.log(y)
+    //     if (y < 8){
+    //         alert("Password must exceed 8 characters!");
+    //     }
+
+    // }
+
+    function checkPass(x) {
+        y = x.length;
+        console.log(y)
+
+
+        if (y === 33){
+            alert("Password must not exceed 32 characters!");
+        }
+
+    }
+
+
+
+</script>
 </html>

@@ -249,7 +249,7 @@ if (!isset($id)) {
                     ?>
 
                     <label>Duration of Rent</label>
-                    <input type="number" onkeyup="checkdura(this.value)" class="form-control" name="dura" min=1  placeholder="Number of Days to rent">
+                    <input type="number" onkeyup="checkdura(this.value)" class="form-control" name="dura" min=1  placeholder="Number of Days to rent" required>
                     <input id="ayd" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
