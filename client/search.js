@@ -11,6 +11,7 @@ $(document).ready(function () {
             processData: false,
 
             success: function(data){
+                console.log(data[0][5]);
                 let c = '';
                 if (!Array.isArray(data) || !data.length) {
                     // array does not exist, is not an array, or is empty
@@ -34,6 +35,7 @@ $(document).ready(function () {
                         da
                              +
                             '</div><br>' +
+                            '<img src="data:image/jpeg;base64,' + data[i][5] + '" />' +
                             '<div class="card-body">' +
                             '<h4 class="card-title">' +
                             '<a href="#">' + data[i][1] + '</a>' +
