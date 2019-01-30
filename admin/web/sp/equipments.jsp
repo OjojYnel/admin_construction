@@ -250,10 +250,10 @@
                                                 </thead>
                                                 <tbody>
                                                     <%
-                                                                                                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction", "root", "");
-                                                                                                            Statement st = con.createStatement();
-                                                                                                            Integer ayd = (Integer) session.getAttribute("ayd");
-                                                                                                            ResultSet rs = st.executeQuery("SELECT * FROM equipments JOIN manufacturers ON equipments.manufacId=manufacturers.manufacId WHERE equipStatus !='Available' AND  spid = '" + ayd + "'");
+                                                                                                             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction", "root", "");
+                                                                                                             st = con.createStatement();
+                                                                                                             ayd = (Integer) session.getAttribute("ayd");
+                                                                                                             rs = st.executeQuery("SELECT * FROM equipments JOIN manufacturers ON equipments.manufacId=manufacturers.manufacId WHERE equipStatus !='Available' AND  spid = '" + ayd + "'");
 
                                                                                                             if (!rs.next()) {
                                                                                                                 out.print("<tr><td>No records</td></tr>");
