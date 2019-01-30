@@ -167,7 +167,7 @@ if (!isset($id)) {
                     while ($row = $r->fetch_assoc()) {
                         $image = $row['equipimage'];
                         echo '
-                            <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="col-lg-6 col-md-6 mb-4">
                                 <div class="card h-100">
                                     <br>
                                        <div class="text-center"><button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
@@ -177,10 +177,10 @@ if (!isset($id)) {
                                      ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
                                    <div class="card-body">
                                      <h4 class="card-title">
-                                        <a href="#">' . $row['equipName'] . '</a>
+                                        <h2><small>Equipment</small>:' . $row['equipName'] . '</h2>
                                       </h4>
-                                        <h5>' . $row['equipPrice'] . '</h5>
-                                        <p class="card-text">' . $row['equipDesc'] . '</p>
+                                        <h2><small>Price</small> : ' . $row['equipPrice'] . '</h2>
+                                        <h2><small>Description</small> :' . $row['equipDesc'] . '</h2>
                                     </div>
                                     <div class="card-footer"></div>
                                 </div>

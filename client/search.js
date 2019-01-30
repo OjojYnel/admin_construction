@@ -15,7 +15,7 @@ $(document).ready(function () {
                 if (!Array.isArray(data) || !data.length) {
                     // array does not exist, is not an array, or is empty
                     c = "<tr><td>No Result</td></tr>";
-                    $('#tbody').html(c);
+                    $('#dito').html(c);
                 }else {
                     let dat = '';
                     let da = '';
