@@ -242,32 +242,52 @@
                                                     Status
                                                 </th>
                                                 <th>
+                                                                                                    Image
+                                                                                                </th>
+                                                <th>
                                                     Action
                                                 </th>
                                                 </thead>
                                                 <tbody>
                                                     <%
-                                                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction", "root", "");
-                                                        st = con.createStatement();
-                                                        ayd = (Integer) session.getAttribute("ayd");
-                                                        rs = st.executeQuery("SELECT * FROM equipments JOIN manufacturers ON equipments.manufacId=manufacturers.manufacId WHERE equipStatus ='Unavailable' AND  spid = '" + ayd + "'");
-                                                        if (!rs.next()) {
-                                                            out.print("<tr><td>No records</td></tr>");
-                                                        } else {
-                                                            rs.beforeFirst();
-                                                            while (rs.next()) {
-                                                                out.println("<tr><td>" + rs.getString("equipName"));
-                                                                out.println("</td><td>" + rs.getString("equipDesc"));
-                                                                out.println("</td><td>" + rs.getString("manufacturers.manufacCompany"));
-                                                                out.println("</td><td>" + rs.getString("equipEngineNumber"));
-                                                                out.println("</td><td>" + rs.getInt("equipPrice"));
-                                                                out.println("</td><td>" + rs.getString("equipStatus"));
-                                                                out.println("</td><td>" + "<a href='jsp/enable.jsp?rid=" + rs.getInt("equipId") + "' class='btn btn-success'><i class='material-icons'>done</i></a>");
-                                                                out.println("</td></tr>");
+                                                                                                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction", "root", "");
+                                                                                                            Statement st = con.createStatement();
+                                                                                                            Integer ayd = (Integer) session.getAttribute("ayd");
+                                                                                                            ResultSet rs = st.executeQuery("SELECT * FROM equipments JOIN manufacturers ON equipments.manufacId=manufacturers.manufacId WHERE equipStatus !='Available' AND  spid = '" + ayd + "'");
 
-                                                            }
-                                                        }
-                                                    %>
+                                                                                                            if (!rs.next()) {
+                                                                                                                out.print("<tr><td>No records</td></tr>");
+                                                                                                            } else {
+                                                                                                                rs.beforeFirst();
+                                                                                                                while (rs.next()) {
+                                                                                                                    out.println("<tr><td>" + rs.getString("equipName"));
+                                                                                                                    out.println("</td><td>" + rs.getString("equipDesc"));
+                                                                                                                    out.println("</td><td>" + rs.getString("manufacturers.manufacCompany"));
+                                                                                                                    out.println("</td><td>" + rs.getString("equipEngineNumber"));
+                                                                                                                    out.println("</td><td>" + rs.getInt("equipPrice"));
+                                                                                                                    out.println("</td><td>" + rs.getString("equipStatus"));
+
+                                                                                                                    if (rs.getString("equipimage") == null) {
+
+                                                                                                                          out.println("</td><td><form name='frm'" +  "action='jsp/up.jsp?num=" + rs.getInt("equipId")  + "' enctype='multipart/form-data' method='post'>");
+                                                                                                                          out.println("<input type='file' name='uProperty' />");
+                                                                                                        out.println("<input type='submit' class='btn btn-success' name='goUpload' value='Upload' />");
+                                                                                                    out.println("</form>");
+
+                                                                                                                        //out.println("<td><button class='btn btn-success' data-toggle='modal' data-target='#exampleModal5' data-id='" + rs.getInt("equipId") + "'>Add Image</button></td>");
+
+                                                                                                                    } else {
+                                                                                                                            byte[] img = rs.getBytes("equipimage"); // blob field
+                                                                                                                            String en = Base64.getEncoder().encodeToString(img);
+                                                                                                                        out.println("</td><td><img width='193' height='130'  src='data:image/jpeg;base64," + en + "'>");
+                                                                                                                    }
+
+                                                                                                                    out.println("</td><td>" + "<a href='jsp/disable.jsp?rid=" + rs.getInt("equipId") + "' class='btn btn-success'><i class='material-icons'>close</i></a></td>");
+                                                                                                                    out.println("</td></tr>");
+
+                                                                                                                }
+                                                                                                            }
+                                                                                                        %>
                                                 </tbody>
                                             </table>
                                         </div>
