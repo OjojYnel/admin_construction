@@ -55,6 +55,32 @@ $(document).ready(function () {
         })
     })
 
+    $("#rm").on("click",function () {
+        let x = $('#rm').val()
+        console.log(x +"asd")
+
+        $.ajax({
+
+            url:"php/getDesc.php?se=" + x,
+            dataType: 'JSON',
+            processData: false,
+
+            success: function(data){
+                console.log(data)
+                let c = '';
+                if (!Array.isArray(data) || !data.length) {
+                    // array does not exist, is not an array, or is empty
+                    c = "<tr><td>No Result</td></tr>";
+                    $('#idtoy').html(c);
+                }else {
+                    $('#idtoy').html(data);
+
+
+                }
+            }
+        })
+    })
+
 
     $('#subrent').on("click",function () {
         let x = $("#rentinfo").val();

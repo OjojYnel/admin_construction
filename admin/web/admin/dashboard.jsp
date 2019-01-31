@@ -137,6 +137,7 @@ if(request.getParameter("ayd") != null){
                 <div class="content">
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
+                            <a href="users.jsp#pa">
                             <div class="card card-stats">
                                 <div class="card-body ">
                                     <div class="row">
@@ -147,7 +148,7 @@ if(request.getParameter("ayd") != null){
                                         </div>
                                         <div class="col-7 col-md-8">
                                             <div class="numbers">
-                                                <p class="card-category">Users</p>
+                                                <p class="card-category">Pending Accounts</p>
                                                  <%
                                                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction","root","");
                                                 Statement st = con.createStatement();
@@ -177,8 +178,10 @@ if(request.getParameter("ayd") != null){
                                     </div>
                                 </div>
                             </div>
+                                                </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6">
+                            <a href="users.jsp#sp">
                             <div class="card card-stats">
                                 <div class="card-body ">
                                     <div class="row">
@@ -217,8 +220,10 @@ if(request.getParameter("ayd") != null){
                                     </div>
                                 </div>
                             </div>
+                                                </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6">
+                            <a href="users.jsp#cl">
                             <div class="card card-stats">
                                 <div class="card-body ">
                                     <div class="row">
@@ -258,8 +263,10 @@ if(request.getParameter("ayd") != null){
                                     </div>
                                 </div>
                             </div>
+                                                </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6">
+                            <a href="transactions.jsp">
                             <div class="card card-stats">
                                 <div class="card-body ">
                                     <div class="row">
@@ -298,6 +305,7 @@ if(request.getParameter("ayd") != null){
                                     </div>
                                 </div>
                             </div>
+                                                </a>
                         </div>
                     </div>
 

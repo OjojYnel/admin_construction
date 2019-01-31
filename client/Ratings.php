@@ -1,11 +1,6 @@
 <?php
 include 'config.php';
 session_start();
-
-if (!isset($_SESSION['username'])) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
-}
 ?>
 
 
@@ -46,21 +41,41 @@ if (!isset($_SESSION['username'])) {
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item ">
+
+                <?php
+                if(isset($_SESSION['username'])){
+                    echo '<li class="nav-item">
                     <a class="nav-link" href="rentals.php">Rentals</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="transactions.php?catid=1">Transactions</a>
                 </li>
+                
+                
+                '
+                    ;
+                }
+
+                ?>
                 <li class="nav-item active">
                     <a class="nav-link" href="Ratings.php?catid=1">Ratings</a>
                 </li>
-                <li class="nav-item">
+
+                <?php
+
+                if (isset($_SESSION['username'])) {
+                    echo '<li class="nav-item">
                     <a class="nav-link" href="change_password.php">Change Password</a>
-                </li>
-                <li class="nav-item">
+                </li><li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
-                </li>
+                </li>';
+                }else{
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="../login.php">Login</a>
+                </li>';
+                }
+                ?>
+
             </ul>
         </div>
     </div>
@@ -125,9 +140,20 @@ if (!isset($_SESSION['username'])) {
                                         <h5>' . $row['equipPrice'] . '</h5>
                                         <p class="card-text">' . $row['equipDesc'] . '</p>
                                     </div>
-                                    <div class="card-footer"></div>
-                                </div>
-                            </div>';
+                                    <div class="card-footer">';
+
+                                            $p =
+                                            $sql = "SELECT stars FROM ratings WHERE equipId = " . $row['equipId'];
+                                            $nn = $con->query($sql);
+                                            $nm = $nn->fetch_row();
+                                            if(empty($nm[0])){
+                                                echo "No Ratings Yet";
+                                            }else{
+                                                echo $nm[0];
+                                            }
+
+
+                                    echo '</div></div></div>';
                     }
                 } else {
                     echo "No Data from Database";
@@ -182,7 +208,7 @@ if (!isset($_SESSION['username'])) {
                     </button>
                 </div>
                 <div class="text-center">
-                    <input id="ayd" type="hidden" class="form-control" name="ayd">
+                    <input id="ayd" type="text" value="" class="form-control" name="ayd">
                     <h5 class="modal-title" id="exampleModalLabel">Ratings</h5>
                     <h2 id="rate"></h2>
 
@@ -267,8 +293,7 @@ if (!isset($_SESSION['username'])) {
 
                     for (let i = 0; i < data.length; i++) {
                         x += "<tr>" +
-                            "<td>" + data[i][3] + "</td>" +
-                            "<td>" + data[i][4] + " / 5</td>";
+                            "<td>" + data[i][3] + "</td>" + "<td>" + data[i][4] + "</td>" ;
                     }
                     $('#tab').html(x);
                 }

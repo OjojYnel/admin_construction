@@ -21,15 +21,15 @@ $feed = htmlspecialchars($_POST['feed']);
 
 
 $sql = "INSERT INTO ratings(userId, equipId, ratingDesc,stars) VALUES ('$user','$id','$feed','$ratings')";
-if($con->query($sql)){
+if($conn->query($sql)){
     $m = "Success!";
     echo "<script type='text/javascript'>
 
             alert('$m');
-            window.location.replace('ratings.php?catid=1');
+            window.location.replace('../index.php?catid=1');
         </script>";
 }else{
-    var_dump($con->error);
+    var_dump($conn->error);
     die();
 
 }

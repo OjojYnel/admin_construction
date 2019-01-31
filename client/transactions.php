@@ -4,7 +4,7 @@ session_start();
 
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
+    header('location: ../login.php');
 }
 ?>
 
@@ -46,14 +46,8 @@ if (!isset($_SESSION['username'])) {
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="rentals.php">Rentals</a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="transactions.php?catid=1">Transactions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Ratings.php?catid=1">Ratings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="change_password.php">Change Password</a>
@@ -73,7 +67,7 @@ if (!isset($_SESSION['username'])) {
 
         <div class="col-lg-3">
 
-            <h1 class="my-4">Rentals</h1>
+            <h1 class="my-4">Transactions</h1>
 
 
         </div>
@@ -88,7 +82,7 @@ if (!isset($_SESSION['username'])) {
                 <?php
                 require 'config.php';
                 $ayd = $_SESSION['ayd'];
-                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' AND rentals.status = 'Finished' OR rentals.status = 'Cancelled'";
+                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' GROUP BY equipments.equipStatus"  ;
                 $r = $con->query($sql);
 
                 if ($r->num_rows > 0) {

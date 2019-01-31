@@ -453,7 +453,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label class="bmd-label-floating">Company Number</label>
-                                                                <input required type="number" name="cnum" 
+                                                                <input required type="number" min="0" name="cnum" 
                                                                        class="form-control">
                                                             </div>
                                                         </div>
@@ -497,7 +497,7 @@
                                                                             out.print("<option>No records</option>");
                                                                         } else {
                                                                             rs.beforeFirst();
-                                                                            out.print("<option selected disabled>Category</option>");
+                                                                            out.print("<option selected disabled value='n'>Category</option>");
                                                                             while (rs.next()) {
                                                                                 out.println("<option value='" + rs.getString("categoryId") + "'>" + rs.getString("categoryName") + "</option>");
 
@@ -512,8 +512,25 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label class="bmd-label-floating">Price</label>
-                                                                <input required type="number"  name="price"
+                                                                <input required type="number" min="0" name="price"
                                                                        class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <select required name="color" class="form-control">
+                                                                    <option disabled selected value="">Color</option>
+                                                                    <option value="red">Red</option>
+                                                                    <option value="pink">Pink</option>
+                                                                    <option value="orange">Orange</option>
+                                                                    <option value="yellow">Yellow</option>
+                                                                    <option value="purple">Purple</option>
+                                                                    <option value="green">Green</option>
+                                                                    <option value="blue">Blue</option>
+                                                                    <option value="brown">Brown</option>
+                                                                    <option value="white">White</option>
+                                                                    <option value="gray">Gray</option>
+                                                                </select>
                                                             </div>
                                                         </div>
 
