@@ -20,12 +20,7 @@
      ps = con.prepareStatement(queryString2);
      ps.executeUpdate();
      
-    String sql = "INSERT INTO transactions(userId,equipId,rentalid) VALUES(?,?,?)";
-    ps = con.prepareStatement(sql);
-    ps.setInt(1, ayd);
-    ps.setInt(2, eid);
-    ps.setInt(3, id);
-    ps.executeUpdate();
+   
      
     
      out.println("<script type=\"text/javascript\">");

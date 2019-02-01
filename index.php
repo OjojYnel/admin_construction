@@ -121,11 +121,11 @@ if (!isset($id)) {
     <div class="container">
         <a class="navbar-brand" href="#">Construction Rentals</a>
 
-            <input type="text" style="width: 20%" id="search" placeholder="Search Equipment" class="form-control">
-            &nbsp;
-            <button id="sear" type="button" class="btn btn-primary">
-                Search
-            </button>
+        <input type="text" style="width: 20%" id="search" placeholder="Search Equipment" class="form-control">
+        &nbsp;
+        <button id="sear" type="button" class="btn btn-primary">
+            Search
+        </button>
 
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -228,7 +228,7 @@ if (!isset($id)) {
                                         <h4><small>Equipment</small>:' . $row['equipName'] . '</h4>
                                       </h5>
                                         <h4><small>Price</small> : ' . $row['equipPrice'] . '</h4>
-                                        <h4><small>Description</small> :' . $x . '&nbsp; <button id="rm" value="' .$row['equipId'] .  '" data-id="' . $row['equipId'] . '" type="button" data-id="' . $row['equipId'] . '" class="btn btn-info"  data-toggle="modal" data-target="#exampleModal7">
+                                        <h4><small>Description</small> :' . $x . '&nbsp; <button id="rm" value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '" type="button" data-id="' . $row['equipId'] . '" class="btn btn-info"  data-toggle="modal" data-target="#exampleModal7">
                                             Read More
                                         </button></h4> 
                                     </div>
@@ -282,7 +282,7 @@ if (!isset($id)) {
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <form action="client/rent.php" method="post">
             <div class="modal-content">
                 <div class="modal-header">
@@ -294,15 +294,30 @@ if (!isset($id)) {
                     <h5 class="modal-title" id="exampleModalLabel">Duration</h5>
                 </div>
                 <div class="modal-body">
-                    <label>Date to Rent</label>
-                    <?php
-                    $da = date("Y-m-d");
-                    echo '<input type="date" min="' . $da . '" class="form-control" name="dr" placeholder="Date to Rent">';
-                    ?>
+                    <table class="table">
+                        <thead>
+                        <th >Start Date</th>
+                        <th>Start Time</th>
+                        <th>Days to Rent</th>
+                        <th>Hours(optional)</th>
+                        </thead>
 
-                    <label>Duration of Rent</label>
-                    <input type="number" onkeyup="checkdura(this.value)" class="form-control" name="dura" min=1
-                           placeholder="Number of Days to rent" required>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <?php
+                                    $da = date("Y-m-d");
+                                    echo '<input  type="date" min="' . $da . '" class="form-control" name="dr" placeholder="Date to Rent">';
+                                    ?>
+                                </td>
+                                <td><input  type="time" class="form-control" name="ti"></td>
+                                <td><input  type="number" min="1" class="form-control" name="dura"></td>
+                                <td><input  type="number" min="1" class="form-control" name="eti"></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <input id="ayd1" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
@@ -348,7 +363,6 @@ if (!isset($id)) {
 </script>
 
 <script>
-
 
 
     $(document).ready(function () {

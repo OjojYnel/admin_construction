@@ -1,7 +1,7 @@
 <?php
 
-if(isset($_POST['file'])){
-    $conn = new mysqli("localhhost","root","","test");
+if(isset($_POST['ti'])){
+    echo $_POST['ti'];
 }
 
 ?>
@@ -11,8 +11,8 @@ if(isset($_POST['file'])){
 <html>
 <body>
 <form action="test.php" method="post">
-    <input type="file" name="file">
-    <input type="submit" value="Upload">
+    <input type="time" name="ti">
+    <input type="submit" value="Test">
 </form>
 </body>
 </html>

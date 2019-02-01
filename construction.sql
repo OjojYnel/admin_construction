@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 31, 2019 at 01:47 PM
+-- Generation Time: Feb 01, 2019 at 01:28 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `equipments` (
   PRIMARY KEY (`equipId`),
   KEY `manufacID` (`manufacId`),
   KEY `catId` (`categoryId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `manufacturers` (
   `manufacAddress` varchar(150) DEFAULT NULL,
   `manufacContactNum` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`manufacId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -119,14 +119,16 @@ CREATE TABLE IF NOT EXISTS `rentals` (
   `userId` int(11) NOT NULL,
   `equipId` int(11) NOT NULL,
   `rental_date` date NOT NULL,
-  `return_date` date NOT NULL,
+  `rental_date_time` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `return_date` varchar(90) COLLATE utf8_unicode_ci NOT NULL,
   `status` enum('Pending','Renting','Finished','Cancelled') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Pending',
   `duration` int(11) NOT NULL,
+  `duration_time` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`rentalid`),
   KEY `client_id` (`userId`),
   KEY `flower_id` (`equipId`),
   KEY `ordStatus` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -162,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`userid`),
   UNIQUE KEY `username` (`username`),
   KEY `date_created` (`date_created`,`user_type`,`account_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -170,7 +172,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`userid`, `username`, `fname`, `lname`, `contactnum`, `email`, `password`, `date_created`, `user_type`, `account_status`) VALUES
 (43, 'admin', 'admin', 'admin', 12345678990, 'admin@gmail.com', '$2y$10$APC6k4WOzL80btAOQzcpN.29Bu5wmrUgRiYnQhPFKs4NJiWQ2YnSC', '2019-01-23 09:55:43', 'Super_Admin', 'Active'),
-(44, 'service1', 'Nel', 'Dela Cruz', 9234374381, 'nelservice@gmail.com', '$2y$10$WVXmol8HzYGI/./ZdvucgOgupZNvEKyEdArymlBVek9Bx2pZYWJU2', '2019-01-30 09:21:00', 'Admin', 'Active');
+(44, 'service1', 'Nel', 'Dela Cruz', 9234374381, 'nelservice@gmail.com', '$2y$10$WVXmol8HzYGI/./ZdvucgOgupZNvEKyEdArymlBVek9Bx2pZYWJU2', '2019-01-30 09:21:00', 'Admin', 'Active'),
+(46, 'user', 'user', 'user', 2931092381, 'user@gmail.com', '$2y$10$azIyX3TmdYQSvk3VSSJ12O.NPH.PW3NVqmxZ35yoMeZCLT1rO3ikS', '2019-02-01 19:40:57', 'Client', 'Active');
 
 -- --------------------------------------------------------
 
