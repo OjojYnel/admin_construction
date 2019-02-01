@@ -303,7 +303,7 @@ if (!isset($id)) {
                     <label>Duration of Rent</label>
                     <input type="number" onkeyup="checkdura(this.value)" class="form-control" name="dura" min=1
                            placeholder="Number of Days to rent" required>
-                    <input id="ayd" type="hidden" class="form-control" name="ayd">
+                    <input id="ayd1" type="hidden" class="form-control" name="ayd">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -328,7 +328,7 @@ if (!isset($id)) {
         $('#exampleModal').on("show.bs.modal", function (ev) {
             let id = $(ev.relatedTarget).data('id');
             console.log(id)
-            $('#ayd').val(id);
+            $('#ayd1').val(id);
 
         })
     });
