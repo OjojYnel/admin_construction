@@ -281,7 +281,7 @@ if(request.getParameter("ayd") != null){
                                                  <%
                                                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/construction","root","");
                                                 st = con.createStatement();
-                                                rs = st.executeQuery("SELECT * FROM transactions");
+                                                rs = st.executeQuery("SELECT * FROM rentals");
                                                 if(!rs.next()){
                                                     out.print("0");
                                                 }else{
