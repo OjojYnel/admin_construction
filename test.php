@@ -1,8 +1,7 @@
 <?php
+date_default_timezone_set('Asia/Manila');
+$a = date('h-i-a');
 
-if(isset($_POST['ti'])){
-    echo $_POST['ti'];
-}
 
 ?>
 
@@ -11,7 +10,7 @@ if(isset($_POST['ti'])){
 <html>
 <body>
 <form action="test.php" method="post">
-    <input type="time" name="ti">
+    <input type="time" min="22:00:00" max="23:00:00" name="ti">
     <input type="submit" value="Test">
 </form>
 </body>

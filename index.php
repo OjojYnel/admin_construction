@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Manila');
 include 'php/config.php';
 session_start();
 $id = $_GET['catid'];
@@ -307,11 +308,15 @@ if (!isset($id)) {
                                 <td>
                                     <?php
                                     $da = date("Y-m-d");
-                                    echo '<input  type="date" min="' . $da . '" class="form-control" name="dr" placeholder="Date to Rent">';
+                                    echo '<input  required type="date" min="' . $da . '" class="form-control" name="dr" placeholder="Date to Rent">';
                                     ?>
                                 </td>
-                                <td><input  type="time" class="form-control" name="ti"></td>
-                                <td><input  type="number" min="1" class="form-control" name="dura"></td>
+                                <td><?php
+                                    $da = date("H:i");
+                                    echo '<input  required type="time" max="24:00:00" min="' . $da . '" class="form-control" name="ti" >';
+                                    ?>
+                                </td>
+                                <td><input required  type="number" min="1" class="form-control" name="dura"></td>
                                 <td><input  type="number" min="1" class="form-control" name="eti"></td>
 
                             </tr>

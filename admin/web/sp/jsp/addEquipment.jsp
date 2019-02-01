@@ -55,7 +55,7 @@
         ps.setString(4, cnum);
         ps.executeUpdate();
 
-        queryString = "SELECT * FROM manufacturers";
+        queryString = "SELECT * FROM manufacturers ORDER BY manufacId DESC LIMIT 1";
         st = con.createStatement();
         rs = st.executeQuery(queryString);
         int ayd = 0;
