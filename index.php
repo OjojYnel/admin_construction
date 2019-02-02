@@ -308,15 +308,15 @@ if (!isset($id)) {
                                 <td>
                                     <?php
                                     $da = date("Y-m-d");
-                                    echo '<input  required type="date" min="' . $da . '" class="form-control" name="dr" placeholder="Date to Rent">';
+                                    echo '<input onchange="checkDate(this.value);"  required type="date" min="' . $da . '" class="form-control" name="dr" placeholder="Date to Rent">';
                                     ?>
                                 </td>
                                 <td><?php
                                     $da = date("H:i");
-                                    echo '<input  required type="time" max="24:00:00" min="' . $da . '" class="form-control" name="ti" >';
+                                    echo '<input id="tym" required type="time" max="24:00:00" min="' . $da . '" class="form-control" name="ti" >';
                                     ?>
                                 </td>
-                                <td><input required  type="number" min="1" class="form-control" name="dura"></td>
+                                <td><input  type="number" min="1" class="form-control" name="dura"></td>
                                 <td><input  type="number" min="1" class="form-control" name="eti"></td>
 
                             </tr>
@@ -368,6 +368,31 @@ if (!isset($id)) {
 </script>
 
 <script>
+
+    function checkDate(x) {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var to = yyyy + '-' + mm + '-' + dd;
+
+        if(to < x){
+            var x = document.getElementById("tym").min = "";
+        }else{
+
+        }
+        console.log(yyyy + '-' + mm + '-' + dd);
+        console.log(x);
+    }
+
 
 
     $(document).ready(function () {
