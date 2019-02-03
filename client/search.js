@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     $("#sear").on("click",function () {
         let x = $('#search').val()
-        console.log(x)
 
         $.ajax({
 
@@ -21,12 +20,17 @@ $(document).ready(function () {
                     let da = '';
 
                     for (let i = 0; i < data.length; i++) {
-                        if (data[i][5] === 'Available') {
+                        if (data[i][4] === 'Available') {
                             da = '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
                                 'Rent</button>';
+
+                            console.log("Tada1")
                         }else{
                             da = '<a></a>';
+                            console.log("Tada")
                         }
+
+                        console.log(data[i][5]);
                         
                         
                     dat += '<div class="col-lg-4 col-md-6 mb-4">' +
@@ -46,7 +50,6 @@ $(document).ready(function () {
                             '</div>' +
                             '</div>';
 
-                    console.log(dat)
 
                     }
                     $('#dito').html(dat);

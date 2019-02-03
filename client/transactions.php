@@ -82,7 +82,7 @@ if (!isset($_SESSION['username'])) {
                 <?php
                 require 'config.php';
                 $ayd = $_SESSION['ayd'];
-                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' GROUP BY equipments.equipStatus"  ;
+                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' "  ;
                 $r = $con->query($sql);
 
                 if ($r->num_rows > 0) {
@@ -94,12 +94,13 @@ if (!isset($_SESSION['username'])) {
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100">
                                     <br>
-                                     ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
+                                     ' . '<img width="250" height="250" src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
                                    <div class="card-body">
-                                     <h4 class="card-title">
-                                        <a href="#">' . $row['equipName'] . '</a>
+                                     <h4 class="card-title text-center">
+                                        <a href="#" >' . $row['equipName'] . '</a>
                                       </h4>
-                                        <h5>' . $row['equipPrice'] . '</h5>
+                                        <h5>' ."Price: " .$row['equipPrice'] . '</h5>
+                                        <h6>' . "Rental Date: " .$row['rental_date'] . '</h6>
                                         <p class="card-text">' . $row['equipDesc'] . '</p>
                                     </div>';
 
