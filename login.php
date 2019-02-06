@@ -108,20 +108,26 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">Contact Number</label>
-              <input type="number" onkeyup="checkNum(this.value)" name="num" id="inputcontactnum" class="form-control" maxlength="21" required="required">
-              <span id="err"></span>
+                                                        <input type="number" onkeyup="checkNum(this.value)" name="num"
+                                                               id="inputcontactnum" class="form-control" maxlength="21"
+                                                               required="required">
+                                                        <span id="err"></span>
 
-                                                       
+
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                    <div class="form-label-group">
-              <input type="text" onkeyup="checkUsername(this.value)" onfocusout="checkMin(this.value)" name="username" id="inputUsername" class="form-control" placeholder="Username" maxlength="21" required="required">
-                <span id="err"></span>
-            </div>
+                                                        <div class="form-label-group">
+                                                            <input type="text" onkeyup="checkUsername(this.value)"
+                                                                   onfocusout="checkMin(this.value)" name="username"
+                                                                   id="inputUsername" class="form-control"
+                                                                   placeholder="Username" maxlength="21"
+                                                                   required="required">
+                                                            <span id="err"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -129,6 +135,7 @@
                                                         <label class="bmd-label-floating">User Type</label>
                                                         <select name="ty" class="form-control">
                                                             <option value="Client">Client</option>
+                                                            <option value="Admin">Service Provider</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -136,16 +143,24 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                    <div class="form-label-group">
-                  <input type="password" onkeyup="checkPass(this.value)" onfocusout="checkMin2(this.value)" name="pass" id="inputPassword" class="form-control" placeholder="Password" maxlength="33" required="required">
-                </div>
+                                                        <div class="form-label-group">
+                                                            <input type="password" onkeyup="checkPass(this.value)"
+                                                                   onfocusout="checkMin2(this.value)" name="pass"
+                                                                   id="inputPassword" class="form-control"
+                                                                   placeholder="Password" maxlength="33"
+                                                                   required="required">
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                    <div class="form-label-group">
-                  <input type="password" onkeyup="checkPass(this.value)" onfocusout="checkMin2(this.value)" name="pass2" id="confirmPassword" class="form-control" placeholder="Confirm password" maxlength="33" required="required">
-                </div>
+                                                        <div class="form-label-group">
+                                                            <input type="password" onkeyup="checkPass(this.value)"
+                                                                   onfocusout="checkMin2(this.value)" name="pass2"
+                                                                   id="confirmPassword" class="form-control"
+                                                                   placeholder="Confirm password" maxlength="33"
+                                                                   required="required">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -191,8 +206,8 @@
     function checkUsername(x) {
         y = x.length;
         document.getElementById("err").value = x
-        if (y === 21){
-          alert("Username must not exceed 20 characters!");
+        if (y === 21) {
+            alert("Username must not exceed 20 characters!");
 
         }
     }
@@ -200,8 +215,8 @@
     function checkNum(x) {
         y = x.length;
         document.getElementById("err").value = x
-        if (y === 21){
-          alert("Contact number must not exceed 20 characters!");
+        if (y === 21) {
+            alert("Contact number must not exceed 20 characters!");
 
         }
     }
@@ -229,12 +244,11 @@
         console.log(y)
 
 
-        if (y === 33){
+        if (y === 33) {
             alert("Password must not exceed 32 characters!");
         }
 
     }
-
 
 
 </script>

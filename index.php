@@ -2,10 +2,6 @@
 date_default_timezone_set('Asia/Manila');
 include 'php/config.php';
 session_start();
-$id = $_GET['catid'];
-if (!isset($id)) {
-    header('Location:index.php?catid=1');
-}
 
 ?>
 
@@ -106,7 +102,6 @@ if (!isset($id)) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Add Feedback">
                 </div>
 
 
@@ -179,7 +174,8 @@ if (!isset($id)) {
 
             <h1 class="my-4">Categories</h1>
             <div class="list-group">
-                <a name=""></a>
+
+                <a href="index.php" class='list-group-item'>All Equipments</a>
 
                 <?php
                 require 'php/config.php';
@@ -192,6 +188,16 @@ if (!isset($id)) {
                 }
 
                 ?>
+
+
+                <br>
+                <div class="text-center">
+                    <h4 class="text-primary">Sort By:</h4>
+                    <a href="#" class="text-primary">Rating</a>
+                    <br>
+
+                    <a href="#" class="text-primary">Price</a>
+                </div>
             </div>
 
         </div>
@@ -201,70 +207,173 @@ if (!isset($id)) {
 
             <br>
 
-            <div class="row">
+            <div class="row" id="sorta">
 
                 <?php
                 require 'php/config.php';
-                $id = $_GET['catid'];
+                if (isset($_GET['catid'])) {
+                    $id = $_GET['catid'];
+                    $sql = "SELECT * FROM equipments WHERE categoryId = '$id' AND equipStatus = 'Available' ";
+                    $r = $conn->query($sql);
 
-                $sql = "SELECT * FROM equipments WHERE categoryId = '$id' AND equipStatus = 'Available' ";
-                $r = $conn->query($sql);
+                    if ($r->num_rows > 0) {
 
-                if ($r->num_rows > 0) {
+                        while ($row = $r->fetch_assoc()) {
+                            $image = $row['equipimage'];
+                            $x = substr($row['equipDesc'], 0, 100);
+                            echo '
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <br>
+                        <div class="text-center">
+                            <button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#exampleModal">
+                                Book
+                            </button>
+                        </div>
+                        <br>
+                        ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" height="400"/>' . '
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <h4>
+                                    <small>Equipment</small>
+                                    :' . $row['equipName'] . '
+                                </h4>
+                            </h5>
+                            <h4>
+                                <small>Price</small>
+                                : ' . $row['equipPrice'] . '
+                            </h4>
+                            <h4>
+                                <small>Description</small>
+                                :' . $x . '&nbsp;
+                                <button id="rm" value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '"
+                                        type="button" data-id="' . $row['equipId'] . '" class="btn btn-info"
+                                        data-toggle="modal" data-target="#exampleModal7">
+                                    Read More
+                                </button>
+                            </h4>
+                        </div>
+                        <div class="card-footer"></div>
+                        ';
 
-                    while ($row = $r->fetch_assoc()) {
-                        $image = $row['equipimage'];
-                        $x = substr($row['equipDesc'], 0, 100);
-                        echo '
-                            <div class="col-lg-6 col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <br>
-                                       <div class="text-center"><button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
-                                            Rent
-                                        </button></div>
-                                    <br>
-                                     ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
-                                   <div class="card-body">
-                                     <h5 class="card-title">
-                                        <h4><small>Equipment</small>:' . $row['equipName'] . '</h4>
-                                      </h5>
-                                        <h4><small>Price</small> : ' . $row['equipPrice'] . '</h4>
-                                        <h4><small>Description</small> :' . $x . '&nbsp; <button id="rm" value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '" type="button" data-id="' . $row['equipId'] . '" class="btn btn-info"  data-toggle="modal" data-target="#exampleModal7">
-                                            Read More
-                                        </button></h4> 
-                                    </div>
-                                    <div class="card-footer"></div>';
+
+                            $sql = "SELECT stars FROM ratings WHERE equipId = " . $row['equipId'];
+                            $nn = $conn->query($sql);
+                            $st = 0;
+                            $fc = 0;
+                            while ($ro = $nn->fetch_assoc()) {
+                                $st2 = (int)$ro['stars'];
+
+                                $st += $st2;
+                                $fc++;
+
+                            }
+
+                            if ($nn->num_rows == 0) {
+                                echo "<h5 class='text-center'>No Ratings Yet</h5>";
+                            } else {
+                                echo '<h5 class="text-center">Ratings : <strong>' . $st / $fc . '</strong>/5</h5>';
+                            }
 
 
-                        $sql = "SELECT stars FROM ratings WHERE equipId = " . $row['equipId'];
-                        $nn = $conn->query($sql);
-                        $st = 0;
-                        $fc = 0;
-                        while ($ro = $nn->fetch_assoc()) {
-                            $st2 = (int)$ro['stars'];
-
-                            $st += $st2;
-                            $fc++;
-
-
+                            echo '<br>
+                        <div class="text-center">
+                            <button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#exampleModal5">
+                                Ratings
+                            </button>
+                        </div>
+                        <br></div>
+                </div>
+                ';
                         }
-
-
-                        if ($nn->num_rows == 0) {
-                            echo "<h5 class='text-center'>No Ratings Yet</h5>";
-                        } else {
-                            echo '<h5 class="text-center">Ratings : <strong>' . $st / $fc . '</strong>/5</h5>';
-                        }
-
-
-                        echo '<br><div class="text-center"><button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal5">
-                                            Ratings
-                                        </button></div><br></div>
-                            </div>';
+                    } else {
+                        echo "No Data from Database";
                     }
                 } else {
-                    echo "No Data from Database";
+                    $sql = "SELECT * FROM equipments WHERE equipStatus = 'Available' ";
+                    $r = $conn->query($sql);
+
+                    if ($r->num_rows > 0) {
+
+                        while ($row = $r->fetch_assoc()) {
+                            $image = $row['equipimage'];
+                            $x = substr($row['equipDesc'], 0, 100);
+                            echo '
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <br>
+                        <div class="text-center">
+                            <button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#exampleModal">
+                                Book
+                            </button>
+                        </div>
+                        <br>
+                        ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" height="400"/>' . '
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <h4>
+                                    <small>Equipment</small>
+                                    :' . $row['equipName'] . '
+                                </h4>
+                            </h5>
+                            <h4>
+                                <small>Price</small>
+                                : ' . $row['equipPrice'] . '
+                            </h4>
+                            <h4>
+                                <small>Description</small>
+                                :' . $x . '&nbsp;
+                                <button id="rm" value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '"
+                                        type="button" data-id="' . $row['equipId'] . '" class="btn btn-info"
+                                        data-toggle="modal" data-target="#exampleModal7">
+                                    Read More
+                                </button>
+                            </h4>
+                        </div>
+                        <div class="card-footer"></div>
+                        ';
+
+
+                            $sql = "SELECT stars FROM ratings WHERE equipId = " . $row['equipId'];
+                            $nn = $conn->query($sql);
+                            $st = 0;
+                            $fc = 0;
+                            while ($ro = $nn->fetch_assoc()) {
+                                $st2 = (int)$ro['stars'];
+
+                                $st += $st2;
+                                $fc++;
+
+
+                            }
+
+
+                            if ($nn->num_rows == 0) {
+                                echo "<h5 class='text-center'>No Ratings Yet</h5>";
+                            } else {
+                                echo '<h5 class="text-center">Ratings : <strong>' . $st / $fc . '</strong>/5</h5>';
+                            }
+
+
+                            echo '<br>
+                        <div class="text-center">
+                            <button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#exampleModal5">
+                                Ratings
+                            </button>
+                        </div>
+                        <br></div>
+                </div>
+                ';
+                        }
+                    } else {
+                        echo "No Data from Database";
+                    }
                 }
+
                 ?>
 
 
@@ -284,7 +393,7 @@ if (!isset($id)) {
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="client/rent.php" method="post">
+        <form action="client/book.php" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -292,34 +401,48 @@ if (!isset($id)) {
                     </button>
                 </div>
                 <div class="text-center">
-                    <h5 class="modal-title" id="exampleModalLabel">Duration</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Rental Information</h5>
                 </div>
                 <div class="modal-body">
                     <table class="table">
                         <thead>
-                        <th >Start Date</th>
+                        <th>Date</th>
                         <th>Start Time</th>
-                        <th>Days to Rent</th>
-                        <th>Hours(optional)</th>
+                        <th>Operator</th>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>
-                                    <?php
-                                    $da = date("Y-m-d");
-                                    echo '<input onchange="checkDate(this.value);"  required type="date" min="' . $da . '" class="form-control" name="dr" placeholder="Date to Rent">';
-                                    ?>
-                                </td>
-                                <td><?php
-                                    $da = date("H:i");
-                                    echo '<input id="tym" required type="time" max="24:00:00" min="' . $da . '" class="form-control" name="ti" >';
-                                    ?>
-                                </td>
-                                <td><input  type="number" min="1" class="form-control" name="dura"></td>
-                                <td><input  type="number" min="1" class="form-control" name="eti"></td>
+                        <tr>
+                            <td>
+                                <?php
+                                $da = date("Y-m-d");
+                                $nda = Date("Y-m-d", strtotime($da . " + 1 days"));
+                                echo '<input onchange="checkDate(this.value);"  required type="date" min="' . $nda . '" class="form-control" name="dr" placeholder="Date to Rent">';
+                                ?>
+                            </td>
+                            <td><?php
+                                $da = date("H:i");
+                                echo '<input id="tym" required type="time" max="24:00:00" min="' . $da . '" class="form-control" name="ti" >';
+                                ?>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios"
+                                           id="exampleRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        With Operator
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios"
+                                           id="exampleRadios2" value="option2">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Without Operator
+                                    </label>
+                                </div>
+                            </td>
 
-                            </tr>
+                        </tr>
                         </tbody>
                     </table>
 
@@ -327,7 +450,7 @@ if (!isset($id)) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Rent">
+                    <input type="submit" class="btn btn-primary" value="Book">
                 </div>
         </form>
     </div>
@@ -384,15 +507,14 @@ if (!isset($id)) {
         }
         var to = yyyy + '-' + mm + '-' + dd;
 
-        if(to < x){
+        if (to < x) {
             var x = document.getElementById("tym").min = "";
-        }else{
+        } else {
 
         }
         console.log(yyyy + '-' + mm + '-' + dd);
         console.log(x);
     }
-
 
 
     $(document).ready(function () {

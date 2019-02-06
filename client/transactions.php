@@ -82,7 +82,7 @@ if (!isset($_SESSION['username'])) {
                 <?php
                 require 'config.php';
                 $ayd = $_SESSION['ayd'];
-                $sql = "SELECT *,rentals.status AS st,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' "  ;
+                $sql = "SELECT *,rentals.status AS st,rentals.rentalid As rid ,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' ";
                 $r = $con->query($sql);
 
                 if ($r->num_rows > 0) {
@@ -99,18 +99,18 @@ if (!isset($_SESSION['username'])) {
                                      <h4 class="card-title text-center">
                                         <a href="#" >' . $row['equipName'] . '</a>
                                       </h4>
-                                        <h5>' ."Price: " .$row['equipPrice'] . '</h5>
-                                        <h6>' . "Rental Date: " .$row['rental_date'] . '</h6>
+                                        <h5>' . "Price: " . $row['equipPrice'] . '</h5>
+                                        <h6>' . "Rental Date: " . $row['rental_date'] . '</h6>
                                         <p class="card-text">' . $row['equipDesc'] . '</p>
                                     </div>';
 
-                        if($row['st'] == 'Renting') {
+                        if ($row['st'] == 'Renting') {
                             echo '
                                     <div class="card-footer text-center">
-                                        <p class="card-text">' . $row['st'] . '</p>
+                                        <p class="card-text">Accepted</p>
                                         <form action="cancelRent.php" method="post">
                                             <input type="hidden" name="rentID" value="' . $row['id'] . '">
-                                            <button class="btn btn-danger" type="submit">Cancel</button>
+                                            <button  id="rn"  data-id="' . $row['id'] . '" data-id2="' . $row['rid'] . '" type="button"  class="btn btn-info"  data-toggle="modal" data-target="#exampleModal2">Rent Now</button>
                                         </form>
                                        
                                     </div>
@@ -118,7 +118,7 @@ if (!isset($_SESSION['username'])) {
                                     
                                 </div>
                             </div>';
-                        }else{
+                        } else {
                             echo '
                                     <div class="card-footer text-center">
                                         <p class="card-text">' . $row['st'] . '</p>
@@ -134,13 +134,11 @@ if (!isset($_SESSION['username'])) {
                         }
 
 
-
                     }
                 } else {
                     echo "No Data from Database";
                 }
                 ?>
-
 
 
             </div>
@@ -162,6 +160,57 @@ if (!isset($_SESSION['username'])) {
     </div>
     <!-- /.container -->
 </footer>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="rent.php" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <h5 class="modal-title" id="exampleModalLabel">Rental Information</h5>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                        <th>Duration(Hours)</th>
+                        <th>Price</th>
+                        <th>Total Price</th>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input id="dura" required onchange="totalPrice(this)" type="number" class="form-control" name="dura" min="1" max="24">
+                            </td>
+                            <td>
+
+                                <input id="pr" disabled  class="form-control" >
+                            </td>
+                            <td>
+                                <input id="pr2" disabled  class="form-control" value="" name="test">
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <input id="ayd2" type="hidden"  class="form-control" name="ayd">
+                    <input id="ayd3" type="hidden"  class="form-control" name="ayd2">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Book">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -196,12 +245,38 @@ if (!isset($_SESSION['username'])) {
 
 <script>
     $(document).ready(function () {
-        $('#exampleModal').on("show.bs.modal", function (ev) {
+        $('#exampleModal2').on("show.bs.modal", function (ev) {
             let id = $(ev.relatedTarget).data('id');
-            $('#ayd').val(id);
+            let id2 = $(ev.relatedTarget).data('id2');
+
+            $('#ayd2').val(id2);
+            // $('#ayd').val(id);
+
+            $.ajax({
+                url: 'rentP.php',
+                data: {ayd: id},
+                dataType: 'JSON',
+                success: function (data) {
+                let x = data[0][0]
+                    $('#pr').val(x);
+
+                }
+            });
 
         })
     });
+
+
+    function totalPrice() {
+        y = $('#dura').val();
+        x = $('#pr').val();
+        z = x * y
+        console.log(z)
+        $('#pr2').val(z)
+        $('#ayd3').val(z)
+
+    }
+
 
 
 </script>

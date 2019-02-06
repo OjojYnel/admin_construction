@@ -10,33 +10,16 @@ if(!isset($_SESSION['username'])){
             window.location.replace('../login.php');
         </script>";
 }else{
-    $user = $_SESSION['ayd'];
+    $rid = $_POST['ayd'];
+    $dura = $_POST['dura'];
+    $total = $_POST['ayd2'];
 
-    $duration = $_POST['dura'];
-    $ti = $_POST['ti'];
-    $eti = $_POST['eti'];
-    $id = $_POST['ayd'];
-    $sql = "SELECT equipPrice FROM equipments WHERE equipId = '$id'";
-    $res = $con->query($sql);
-    $r = $res->fetch_row();
-    $pr = $r[0];
+    echo $rid;
+    echo $dura;
+    echo $total;
 
-
-    $dr = $_POST['dr'];
-    $da = date("Y-m-d");
-    $nda = Date("y-m-d", strtotime($dr ." +" .$duration ." days"));
-
-    $da2 = date("h:i:a",strtotime($ti));
-
-    $h = Date("h-i-a", strtotime($ti ." +" .$eti ." hours"));
-
-    $new = $nda . " : " .$h;
-
-
-    $sql = "INSERT INTO rentals (userId, equipId, rental_date,rental_date_time,return_date, duration,duration_time) VALUES ('$user','$id','$dr','$da2','$new','$duration','$eti')";
+    $sql = "UPDATE rentals SET duration='$dura',totalPrice='$total' WHERE rentalid = '$rid'";
     if($con->query($sql)){
-        $sql = "UPDATE equipments SET equipStatus = 'Rented' WHERE equipId = '$id' ";
-        $con->query($sql);
         $m = "Success!";
         echo "<script type='text/javascript'>
 

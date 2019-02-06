@@ -135,9 +135,6 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title text-center" id="pa"> Pending Accounts</h4>
-                                    <button class="btn btn-group-lg pull-right" data-toggle="modal" data-target="#exampleModal" x>
-                                        Service Provider Account
-                                    </button>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

@@ -18,24 +18,12 @@ if ($pass == $pass2) {
     $p = password_hash($pass, PASSWORD_DEFAULT);
     $sql = "INSERT INTO users(username, fname, lname, contactnum, email, password, user_type, account_status) VALUE ('$username','$first','$last','$num','$eml','$p','$ty','$st')";
 
-
-    if ($conn->query($sql)) {
-        if (empty($t)) {
-            $m = "Success! Waiting for approval.";
-            echo "<script type='text/javascript'>
+    $m = "Success! Waiting for approval.";
+    echo "<script type='text/javascript'>
             alert('$m');
             window.location.replace('../login.php');
             </script>";
-        }else{
-            $m = "Success! .";
-            echo "<script type='text/javascript'>
-            alert('$m');
-            window.location.replace('http://localhost:8080/admin/admin/users.jsp');
-            </script>";
-        }
-    } else {
-        var_dump($conn->error);
-    }
+
 } else {
     $m = "Error! Password dont match!";
     echo "<script type='text/javascript'>

@@ -151,15 +151,6 @@
                                                     Rental Date & Time
                                                 </th>
                                                 <th>
-                                                    Return Date
-                                                </th>
-                                                <th>
-                                                    Duration of Days & Time
-                                                </th>
-                                                <th>
-                                                    Price
-                                                </th>
-                                                <th>
                                                     Action
                                                 </th>
                                                 </thead>
@@ -178,15 +169,8 @@
                                                                 out.println("<tr><td>" + rs.getString("users.fname") + " " + rs.getString("users.lname"));
                                                                 out.println("</td><td>" + rs.getString("equipments.equipName"));
                                                                 out.println("</td><td>" + rs.getString("rentals.rental_date") + ":" + rs.getString("rentals.rental_date_time") );
-                                                                out.println("</td><td>" + rs.getString  ("rentals.return_date"));
-                                                                if(rs.getString("rentals.duration_time").isEmpty()){
-                                                                    out.println("</td><td>" + rs.getString("rentals.duration") + " days");
-                                                                }else{
-                                                                    out.println("</td><td>" + rs.getString("rentals.duration") + " days," + rs.getString("rentals.duration_time") + " hour/s");
-                                                                }
+                                                             
                                                                 
-                                                                
-                                                                out.println("</td><td>" + rs.getInt("duration") * rs.getInt("equipments.equipPrice") + ".00");
                                                                 out.println("</td><td>" + "<a href='jsp/accept.jsp?rid=" + rs.getInt("rentalid") + "&eid=" + rs.getInt("equipments.equipId") + "' class='btn btn-success'><i class='material-icons'>done</i></a>" + "<a href='jsp/reject.jsp?rid=" + rs.getInt("rentalid") + "&eid=" + rs.getInt("equipments.equipId") + "' class='btn btn-success'><i class='material-icons'>close</i></a>");
                                                                 out.println("</td></tr>");
 
@@ -219,9 +203,6 @@
                                                     Rental Date
                                                 </th>
                                                 <th>
-                                                    Return Date
-                                                </th>
-                                                <th>
                                                     Duration/Days
                                                 </th>
                                                 <th>
@@ -244,7 +225,6 @@
                                                                 out.println("<tr><td>" + rs.getString("users.fname") + " " + rs.getString("users.lname"));
                                                                 out.println("</td><td>" + rs.getString("equipments.equipName"));
                                                                 out.println("</td><td>" + rs.getString("rentals.rental_date"));
-                                                                out.println("</td><td>" + rs.getString("rentals.return_date"));
                                                                 out.println("</td><td>" + rs.getInt("rentals.duration"));
                                                                 out.println("</td><td>" + rs.getInt("duration") * rs.getInt("equipments.equipPrice") + ".00");
                                                                 out.println("</td><td>" + "<a href='jsp/done.jsp?rid=" + rs.getInt("rentalid") + "&eid=" + rs.getInt("equipments.equipId") + "' class='btn btn-success'><i class='material-icons'>done</i></a>");

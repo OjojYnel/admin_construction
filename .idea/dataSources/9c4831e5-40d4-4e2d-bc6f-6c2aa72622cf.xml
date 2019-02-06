@@ -1138,10 +1138,9 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="236" name="return_date">
+    <column id="273" parent="236" name="totalPrice">
       <Position>6</Position>
-      <DataType>date|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(90)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="274" parent="236" name="status">
@@ -1154,124 +1153,118 @@
     <column id="275" parent="236" name="duration">
       <Position>8</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="236" name="duration_time">
-      <Position>9</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="277" parent="236" name="client_id">
+    <index id="276" parent="236" name="client_id">
       <ColNames>userId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="278" parent="236" name="flower_id">
+    <index id="277" parent="236" name="flower_id">
       <ColNames>equipId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="279" parent="236" name="ordStatus">
+    <index id="278" parent="236" name="ordStatus">
       <ColNames>status</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="280" parent="236" name="PRIMARY">
+    <key id="279" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>rentalid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="281" parent="237" name="userid">
+    <column id="280" parent="237" name="userid">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="237" name="username">
+    <column id="281" parent="237" name="username">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="237" name="fname">
+    <column id="282" parent="237" name="fname">
       <Position>3</Position>
       <DataType>varchar(25)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="237" name="lname">
+    <column id="283" parent="237" name="lname">
       <Position>4</Position>
       <DataType>varchar(25)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="237" name="contactnum">
+    <column id="284" parent="237" name="contactnum">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="237" name="email">
+    <column id="285" parent="237" name="email">
       <Position>6</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="237" name="password">
+    <column id="286" parent="237" name="password">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="237" name="date_created">
+    <column id="287" parent="237" name="date_created">
       <Position>8</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="237" name="user_type">
+    <column id="288" parent="237" name="user_type">
       <Position>9</Position>
       <DataType>enum(&apos;Client&apos;, &apos;Admin&apos;, &apos;Super_Admin&apos;)|0e</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="237" name="account_status">
+    <column id="289" parent="237" name="account_status">
       <Position>10</Position>
       <DataType>enum(&apos;Active&apos;, &apos;Disabled&apos;, &apos;Pending&apos;, &apos;Denied&apos;)|0e</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;Pending&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="291" parent="237" name="username">
+    <index id="290" parent="237" name="username">
       <ColNames>username</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="292" parent="237" name="date_created">
+    <index id="291" parent="237" name="date_created">
       <ColNames>date_created
 user_type
 account_status</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="293" parent="237" name="PRIMARY">
+    <key id="292" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>userid</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="294" parent="237" name="username">
+    <key id="293" parent="237" name="username">
       <ColNames>username</ColNames>
       <UnderlyingIndexName>username</UnderlyingIndexName>
     </key>
-    <column id="295" parent="238" name="userid">
+    <column id="294" parent="238" name="userid">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="296" parent="238" name="rental_id">
+    <column id="295" parent="238" name="rental_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="297" parent="238" name="totalPayment">
+    <column id="296" parent="238" name="totalPayment">
       <Position>3</Position>
       <DataType>varchar(22)|0s</DataType>
     </column>

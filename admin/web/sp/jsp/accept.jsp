@@ -16,6 +16,11 @@
      ps = con.prepareStatement(queryString1);
      ps.executeUpdate();
      
+     
+     
+     String queryString2 = "UPDATE equipments SET equipStatus = 'Rented' WHERE equipId = '" + eid + "'";
+     ps = con.prepareStatement(queryString2);
+     ps.executeUpdate();
     
      out.println("<script type=\"text/javascript\">");
      out.println("alert('Accepted!!');");

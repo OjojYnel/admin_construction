@@ -32,7 +32,7 @@ if (password_verify($pass, $r[2]) && $r[4] != 'pending') {
             $_SESSION['username'] = $user;
             $_SESSION['ayd'] = $r[5];
             $_SESSION['ty'] = $r[3];
-            header('Location:../index.php?catid=1');
+            header('Location:../index.php');
         } elseif ($r[3] == "Admin") {
             $_SESSION['full'] = strtoupper($r[0] . " " . $r[1]);
             $_SESSION['userType'] = $r[3];
