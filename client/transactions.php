@@ -154,7 +154,7 @@ if (!isset($_SESSION['username'])) {
                             </h4>
                         </div>';
 
-                        if ($row['st'] != 'Renting') {
+                        if ($row['st'] == 'Renting' && (empty($row['totalPrice']))) {
                             echo '
                                     <div class="card-footer text-center">
                                         <p class="card-text">Pending</p>
@@ -168,10 +168,24 @@ if (!isset($_SESSION['username'])) {
                                     
                                 </div>
                             </div>';
-                        } else {
+                        } elseif ($row['st'] == 'Renting' && (!empty($row['totalPrice']))){
                             echo '
                                     <div class="card-footer text-center">
                                         <p class="card-text">Ongoing</p>
+                                        <form action="cancelRent.php" method="post">
+                                            <input type="hidden" name="rentID" value="' . $row['id'] . '">
+                                        </form>
+                                       
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>';
+
+                        }else {
+                            echo '
+                                    <div class="card-footer text-center">
+                                        <p class="card-text">'  .$row['st'] .'</p>
                                         <form action="cancelRent.php" method="post">
                                             <input type="hidden" name="rentID" value="' . $row['id'] . '">
                                         </form>
