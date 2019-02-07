@@ -109,7 +109,6 @@ session_start();
     </div>
     </form>
 </div>
-</div>
 
 
 <!-- Navigation -->
@@ -193,10 +192,14 @@ session_start();
                 <br>
                 <div class="text-center">
                     <h4 class="text-primary">Sort By:</h4>
-                    <a href="#" class="text-primary">Rating</a>
+                    <a href="#" onclick="sorta('equipPrice')" class="text-primary">Price</a>
+                    <br>
+                    <a href="#" onclick="sorta('equipName')" class="text-primary">Name</a>
+                    <br>
+                    <a href="#" onclick="sorta('color')" class="text-primary">Color</a>
                     <br>
 
-                    <a href="#" class="text-primary">Price</a>
+
                 </div>
             </div>
 
@@ -213,7 +216,7 @@ session_start();
                 require 'php/config.php';
                 if (isset($_GET['catid'])) {
                     $id = $_GET['catid'];
-                    $sql = "SELECT * FROM equipments WHERE categoryId = '$id' AND equipStatus = 'Available' ";
+                    $sql = "SELECT * FROM equipments join users on equipments.spid = users.userid WHERE categoryId = '$id' AND equipStatus = 'Available' ORDER BY equipPrice";
                     $r = $conn->query($sql);
 
                     if ($r->num_rows > 0) {
@@ -242,13 +245,21 @@ session_start();
                             </h5>
                             <h4>
                                 <small>Price</small>
-                                : ' . $row['equipPrice'] . '
+                                : ' . $row['equipPrice']  . ' <small>/hour</small> 
+                            </h4>
+                            <h4>
+                                <small>Service Provider</small>
+                                : ' . $row['fname'] . " " . $row['lname'] . '
+                            </h4>
+                            <h4>
+                                <small>Color</small>
+                                : ' . $row['color'] . '
                             </h4>
                             <h4>
                                 <small>Description</small>
                                 :' . $x . '&nbsp;
-                                <button id="rm" value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '"
-                                        type="button" data-id="' . $row['equipId'] . '" class="btn btn-info"
+                                <button  value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '"
+                                        type="button" data-id="' . $row['equipId'] . '" class="btn btn-info rm"
                                         data-toggle="modal" data-target="#exampleModal7">
                                     Read More
                                 </button>
@@ -292,7 +303,7 @@ session_start();
                         echo "No Data from Database";
                     }
                 } else {
-                    $sql = "SELECT * FROM equipments WHERE equipStatus = 'Available' ";
+                    $sql = "SELECT * FROM equipments join users on equipments.spid = users.userid  WHERE equipStatus = 'Available' ORDER BY equipPrice";
                     $r = $conn->query($sql);
 
                     if ($r->num_rows > 0) {
@@ -321,13 +332,21 @@ session_start();
                             </h5>
                             <h4>
                                 <small>Price</small>
-                                : ' . $row['equipPrice'] . '
+                                : ' . $row['equipPrice'] . ' <small>/hour</small>
+                            </h4>
+                            <h4>
+                                <small>Service Provider</small>
+                                : ' . $row['fname'] . " " . $row['lname'] . '
+                            </h4>
+                            <h4>
+                                <small>Color</small>
+                                : ' . $row['color'] . '
                             </h4>
                             <h4>
                                 <small>Description</small>
                                 :' . $x . '&nbsp;
                                 <button id="rm" value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '"
-                                        type="button" data-id="' . $row['equipId'] . '" class="btn btn-info"
+                                        type="button" data-id="' . $row['equipId'] . '" class="btn btn-info rm"
                                         data-toggle="modal" data-target="#exampleModal7">
                                     Read More
                                 </button>
@@ -529,6 +548,205 @@ session_start();
 
         })
     });
+
+
+    function sorta(x) {
+        var myParam = location.search.split('catid=')[1]
+        console.log(myParam)
+        console.log(x)
+
+        if(x === 'equipPrice'){
+            console.log("aww2")
+            if(myParam){
+                var url = window.location.href;
+                url += '&catid=' + myParam
+                window.location.replace("index.php?catid=" +myParam)
+            }else {
+                var url = window.location.href;
+                console.log(url)
+                window.location.replace("index.php")
+                console.log("22")
+            }
+        }else if(myParam){
+            $.ajax({
+
+                url: 'php/sort.php?ayd=' + myParam + '&s=' + x ,
+                dataType: 'JSON',
+                processData: false,
+
+                success: function(data){
+                    let c = '';
+                    if (!Array.isArray(data) || !data.length) {
+                        // array does not exist, is not an array, or is empty
+                        c = "<tr><td>No Result</td></tr>";
+                        $('#dito').html(c);
+                    }else {
+                        let dat = '';
+                        let da = '';
+
+                        for (let i = 0; i < data.length; i++) {
+                            if (data[i][4] === 'Available') {
+                                da = '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
+                                    'Rent</button>';
+
+                            }
+
+                            console.log(data[i][1])
+
+
+                            dat += '<div class="col-lg-6 col-md-6 mb-4">' +
+                                '<br>' +
+                                da
+                                +
+                                '</div><br>' +
+                                '<img src="data:image/jpeg;base64,' + data[i][8] + '" height="400" />' +
+
+
+                                '<div class="card-body">' +
+                                    '<h5 class="card-title">' +
+                                        '<small>Equipment</small>' + data[i][1] +
+                                    '</h5>' +
+                                    '<h5 class="card-title">' +
+                                        '<small>Price</small>' + data[i][2] +
+                                    '</h5>' +
+                                    '<h5 class="card-title">' +
+                                        '<small>Service Provider</small>' + data[i][3] + ' ' + data[i][4] + '/hour'+
+                                    '</h5>' +
+                                    '<h5 class="card-title">' +
+                                        '<small>Color</small>' + data[i][5] +
+                                    '</h5>' +
+                                    '<h4>' +
+                                        '<small>Description</small>&nbsp; '+ data[i][6] +
+                                        '<button  value="' + data[i][0] + '" data-id="' + data[i][0] + '" type="button" '+
+                                        'class="btn btn-info rm" data-toggle="modal" data-target="#exampleModal7">Read More</button>'+
+                                    '</h4>' +
+                                '</div>'
+
+
+                        }
+                        $('#dito').html(dat);
+                        $(".rm").on("click",function () {
+                            let x = $(this).val()
+                            console.log(x +"asd")
+
+                            $.ajax({
+
+                                url:"php/getDesc.php?se=" + x,
+                                dataType: 'JSON',
+                                processData: false,
+
+                                success: function(data){
+                                    console.log(data)
+                                    let c = '';
+                                    if (!Array.isArray(data) || !data.length) {
+                                        // array does not exist, is not an array, or is empty
+                                        c = "<tr><td>No Result</td></tr>";
+                                        $('#idtoy').html(c);
+                                    }else {
+                                        $('#idtoy').html(data);
+
+
+                                    }
+                                }
+                            })
+                        })
+                    }
+                }
+            })
+        }else{
+            $.ajax({
+
+                url: 'php/sort.php?s=' + x,
+                dataType: 'JSON',
+                processData: false,
+
+                success: function(data){
+                    let c = '';
+                    if (!Array.isArray(data) || !data.length) {
+                        // array does not exist, is not an array, or is empty
+                        c = "<tr><td>No Result</td></tr>";
+                        $('#dito').html(c);
+                    }else {
+                        let dat = '';
+                        let da = '';
+
+                        for (let i = 0; i < data.length; i++) {
+                            if (data[i][4] === 'Available') {
+                                da = '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
+                                    'Rent</button>';
+
+
+                            }
+                            console.log(data[i][1])
+
+
+                            dat += '<div class="col-lg-6 col-md-6 mb-4">' +
+                                '<br>' +
+                                da
+                                +
+                                '</div><br>' +
+                                '<img src="data:image/jpeg;base64,' + data[i][8] + '" height="400" />' +
+
+
+                                '<div class="card-body">' +
+                                '<h5 class="card-title">' +
+                                '<small>Equipment</small>' + data[i][1] +
+                                '</h5>' +
+                                '<h5 class="card-title">' +
+                                '<small>Price</small>' + data[i][2] +
+                                '</h5>' +
+                                '<h5 class="card-title">' +
+                                '<small>Service Provider</small>' + data[i][3] + ' ' + data[i][4] + '/hour'+
+                                '</h5>' +
+                                '<h5 class="card-title">' +
+                                '<small>Color</small>' + data[i][5] +
+                                '</h5>' +
+                                '<h4>' +
+                                '<small>Description</small>&nbsp; '+ data[i][6] +
+                                '<button  value="' + data[i][0] + '" data-id="' + data[i][0] + '" type="button" '+
+                                'class="btn btn-info rm" data-toggle="modal" data-target="#exampleModal7">Read More</button>'+
+                                '</h4>' +
+                                '</div>'
+
+
+
+
+                        }
+                        $('#dito').html(dat);
+
+                        $(".rm").on("click",function () {
+                            let x = $(this).val()
+                            console.log(x +"asd")
+
+                            $.ajax({
+
+                                url:"php/getDesc.php?se=" + x,
+                                dataType: 'JSON',
+                                processData: false,
+
+                                success: function(data){
+                                    console.log(data)
+                                    let c = '';
+                                    if (!Array.isArray(data) || !data.length) {
+                                        // array does not exist, is not an array, or is empty
+                                        c = "<tr><td>No Result</td></tr>";
+                                        $('#idtoy').html(c);
+                                    }else {
+                                        $('#idtoy').html(data);
+
+
+                                    }
+                                }
+                            })
+                        })
+                    }
+                }
+            })
+        }
+
+
+
+    }
 
     function getRate(x) {
         $id = x;

@@ -60,6 +60,35 @@ if (!isset($_SESSION['username'])) {
     </div>
 </nav>
 
+<div class="modal fade " id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form action="php/addRatings.php" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <input id="ayd" type="hidden" value="" class="form-control" name="ayd">
+                    <h5 class="modal-title" id="exampleModalLabel">Description</h5>
+                    <h2 id="rate"></h2>
+
+                </div>
+                <div class="modal-body">
+                    <div class="text-primary" id="idtoy"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+
+            </div>
+    </div>
+    </form>
+</div>
+
 <!-- Page Content -->
 <div class="container">
 
@@ -82,27 +111,48 @@ if (!isset($_SESSION['username'])) {
                 <?php
                 require 'config.php';
                 $ayd = $_SESSION['ayd'];
-                $sql = "SELECT *,rentals.status AS st,rentals.rentalid As rid ,equipments.equipId AS id FROM rentals JOIN equipments on rentals.equipId = equipments.equipId WHERE rentals.userId = '$ayd' ";
+                $sql = "SELECT *,rentals.status AS st,rentals.rentalid As rid ,equipments.equipId AS id,users.fname AS fn,users.lname As ln FROM rentals JOIN equipments on rentals.equipId = equipments.equipId JOIN users ON equipments.spid = users.userid WHERE rentals.userId = '$ayd' ";
                 $r = $con->query($sql);
 
                 if ($r->num_rows > 0) {
 
                     while ($row = $r->fetch_assoc()) {
                         $image = $row['equipimage'];
-
+                        $x = substr($row['equipDesc'], 0, 100);
                         echo '
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100">
                                     <br>
                                      ' . '<img width="250" height="250" src="data:image/jpeg;base64,' . base64_encode($image) . '" />' . '
                                    <div class="card-body">
-                                     <h4 class="card-title text-center">
-                                        <a href="#" >' . $row['equipName'] . '</a>
-                                      </h4>
-                                        <h5>' . "Price: " . $row['equipPrice'] . '</h5>
-                                        <h6>' . "Rental Date: " . $row['rental_date'] . '</h6>
-                                        <p class="card-text">' . $row['equipDesc'] . '</p>
-                                    </div>';
+                            <h5 class="card-title">
+                                <h4>
+                                    <small>Equipment</small>
+                                    :' . $row['equipName'] . '
+                                </h4>
+                            </h5>
+                            <h4>
+                                <small>Price</small>
+                                : ' . $row['equipPrice'] . '
+                            </h4>
+                            <h4>
+                                <small>Service Provider</small>
+                                : ' . $row['fn'] . " " . $row['ln'] . '
+                            </h4>
+                            <h4>
+                                <small>Color</small>
+                                : ' . $row['color'] . '
+                            </h4>
+                            <h4>
+                                <small>Description</small>
+                                :' . $x . '&nbsp;
+                                <button id="rm" value="' . $row['equipId'] . '" data-id="' . $row['equipId'] . '"
+                                        type="button" data-id="' . $row['equipId'] . '" class="btn btn-info rm"
+                                        data-toggle="modal" data-target="#exampleModal7">
+                                    Read More
+                                </button>
+                            </h4>
+                        </div>';
 
                         if ($row['st'] == 'Renting') {
                             echo '
@@ -240,6 +290,7 @@ if (!isset($_SESSION['username'])) {
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="search.js"></script>
 
 </body>
 

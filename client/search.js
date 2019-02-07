@@ -58,8 +58,8 @@ $(document).ready(function () {
         })
     })
 
-    $("#rm").on("click",function () {
-        let x = $('#rm').val()
+    $(".rm").on("click",function () {
+        let x = $(this).val()
         console.log(x +"asd")
 
         $.ajax({
