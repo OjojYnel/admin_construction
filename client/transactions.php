@@ -154,7 +154,7 @@ if (!isset($_SESSION['username'])) {
                             </h4>
                         </div>';
 
-                        if ($row['st'] == 'Renting') {
+                        if ($row['st'] != 'Renting') {
                             echo '
                                     <div class="card-footer text-center">
                                         <p class="card-text">Accepted</p>
