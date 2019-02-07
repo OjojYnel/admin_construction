@@ -133,7 +133,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">User Type</label>
-                                                        <select name="ty" class="form-control">
+                                                        <select name="typ" class="form-control">
                                                             <option value="Client">Client</option>
                                                             <option value="Admin">Service Provider</option>
                                                         </select>
