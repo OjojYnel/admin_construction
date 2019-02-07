@@ -157,7 +157,7 @@ if (!isset($_SESSION['username'])) {
                         if ($row['st'] != 'Renting') {
                             echo '
                                     <div class="card-footer text-center">
-                                        <p class="card-text">Accepted</p>
+                                        <p class="card-text">Pending</p>
                                         <form action="cancelRent.php" method="post">
                                             <input type="hidden" name="rentID" value="' . $row['id'] . '">
                                             <button  id="rn"  data-id="' . $row['id'] . '" data-id2="' . $row['rid'] . '" type="button"  class="btn btn-info"  data-toggle="modal" data-target="#exampleModal2">Rent Now</button>
