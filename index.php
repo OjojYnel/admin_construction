@@ -192,11 +192,11 @@ session_start();
                 <br>
                 <div class="text-center">
                     <h4 class="text-primary">Sort By:</h4>
-                    <a href="#" onclick="sorta('equipPrice')" class="text-primary">Price</a>
+                    <a href="#" onclick="sorta('equipPrice');" class="text-primary">Price</a>
                     <br>
-                    <a href="#" onclick="sorta('equipName')" class="text-primary">Name</a>
+                    <a href="#" onclick="sorta('equipName');" class="text-primary">Name</a>
                     <br>
-                    <a href="#" onclick="sorta('color')" class="text-primary">Color</a>
+                    <a href="#" onclick="sorta('color');" class="text-primary">Color</a>
                     <br>
 
 
@@ -572,9 +572,10 @@ session_start();
 
                 url: 'php/sort.php?ayd=' + myParam + '&s=' + x ,
                 dataType: 'JSON',
-                processData: false,
 
                 success: function(data){
+
+
                     let c = '';
                     if (!Array.isArray(data) || !data.length) {
                         // array does not exist, is not an array, or is empty
@@ -654,17 +655,18 @@ session_start();
                 }
             })
         }else{
+
             $.ajax({
 
                 url: 'php/sort.php?s=' + x,
                 dataType: 'JSON',
-                processData: false,
 
                 success: function(data){
+
                     let c = '';
                     if (!Array.isArray(data) || !data.length) {
                         // array does not exist, is not an array, or is empty
-                        c = "<tr><td>No Result</td></tr>";
+                        c = "<tr><td>No REsultpp</td></tr>";
                         $('#dito').html(c);
                     }else {
                         let dat = '';
@@ -677,7 +679,6 @@ session_start();
 
 
                             }
-                            console.log(data[i][1])
 
 
                             dat += '<div class="col-lg-6 col-md-6 mb-4">' +
@@ -714,6 +715,7 @@ session_start();
                         }
                         $('#dito').html(dat);
 
+
                         $(".rm").on("click",function () {
                             let x = $(this).val()
                             console.log(x +"asd")
@@ -740,7 +742,11 @@ session_start();
                             })
                         })
                     }
-                }
+                },
+                error: function(xhr, status, error) {
+                    // check status && error
+                console.log(error,status,xhr);
+                },
             })
         }
 
