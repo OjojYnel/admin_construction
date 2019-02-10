@@ -216,8 +216,10 @@ session_start();
                 require 'php/config.php';
                 if (isset($_GET['catid'])) {
                     $id = $_GET['catid'];
-                    $sql = "SELECT * FROM equipments join users on equipments.spid = users.userid WHERE categoryId = '$id' AND equipStatus = 'Available' ORDER BY equipPrice";
+                    $sql = "SELECT * FROM equipments join users on equipments.spid = users.userid WHERE categoryId = '$id' ORDER BY equipPrice";
                     $r = $conn->query($sql);
+
+
 
                     if ($r->num_rows > 0) {
 
@@ -227,13 +229,24 @@ session_start();
                             echo '
                 <div class="col-lg-6 col-md-6 mb-4">
                     <div class="card h-100">
-                        <br>
+                        <br>';
+
+                        if($row['equipStatus'] == 'Available'){
+                            echo
+                                '
                         <div class="text-center">
                             <button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"
                                     data-toggle="modal" data-target="#exampleModal">
-                                Book
+                                Rent
                             </button>
                         </div>
+                            ';
+                        }else{
+                            echo '<div class="text-center"><h4><small>Rented</h4></div> ';
+                        }
+
+
+                    echo '
                         <br>
                         ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" height="400"/>' . '
                         <div class="card-body">
@@ -314,13 +327,23 @@ session_start();
                             echo '
                 <div class="col-lg-6 col-md-6 mb-4">
                     <div class="card h-100">
-                        <br>
+                        <br>';
+
+                            if($row['equipStatus'] == 'Available'){
+                                echo
+                                    '
                         <div class="text-center">
                             <button data-id="' . $row['equipId'] . '" type="button" class="btn btn-primary"
                                     data-toggle="modal" data-target="#exampleModal">
-                                Book
+                                Rent
                             </button>
                         </div>
+                            ';
+                            }else{
+                                echo '<div class="text-center"><h4><small>Rented</h4></div> ';
+                            }
+
+                            echo '
                         <br>
                         ' . '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" height="400"/>' . '
                         <div class="card-body">
@@ -427,6 +450,7 @@ session_start();
                         <thead>
                         <th>Date</th>
                         <th>Start Time</th>
+                        <th>Number of Hours</th>
                         <th>Operator</th>
                         </thead>
 
@@ -443,6 +467,9 @@ session_start();
                                 $da = date("H:i");
                                 echo '<input id="tym" required type="time" max="24:00:00" min="' . $da . '" class="form-control" name="ti" >';
                                 ?>
+                            </td>
+                            <td>
+                                <input type="number" min="1" max="24" class="form-control" name="dura">
                             </td>
                             <td>
                                 <div class="form-check">
@@ -586,13 +613,13 @@ session_start();
                         let da = '';
 
                         for (let i = 0; i < data.length; i++) {
-                            if (data[i][4] === 'Available') {
+                            if (data[i][7] === 'Available') {
                                 da = '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
                                     'Rent</button>';
 
                             }
 
-                            console.log(data[i][1])
+                            console.log(data[i][4])
 
 
                             dat += '<div class="col-lg-6 col-md-6 mb-4">' +
@@ -673,7 +700,7 @@ session_start();
                         let da = '';
 
                         for (let i = 0; i < data.length; i++) {
-                            if (data[i][4] === 'Available') {
+                            if (data[i][7] === 'Available') {
                                 da = '<div class="text-center"><button data-id="' + data[i][0] + '" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">' +
                                     'Rent</button>';
 

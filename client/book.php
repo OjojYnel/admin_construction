@@ -13,6 +13,7 @@ if(!isset($_SESSION['username'])){
     $user = $_SESSION['ayd'];
     $ti = $_POST['ti'];
     $id = $_POST['ayd'];
+    $d = $_POST['dura'];
 
     $sql = "SELECT equipPrice FROM equipments WHERE equipId = '$id'";
     $res = $con->query($sql);
@@ -30,8 +31,14 @@ if(!isset($_SESSION['username'])){
 //
 //    $new = $nda . " : " .$h;
 
+    $sql = "SELECT equipPrice FROM equipments WHERE equipId = $id";
+    $aw = $con->query($sql);
+    $aw2 = $aw->fetch_row();
+    $az = $aw2[0];
 
-    $sql = "INSERT INTO rentals (userId, equipId, rental_date,rental_date_time) VALUES ('$user','$id','$dr','$ti')";
+    $tp = $d * $az;
+
+    $sql = "INSERT INTO rentals (userId, equipId, rental_date,rental_date_time,duration,totalPrice) VALUES ('$user','$id','$dr','$ti','$d','$tp')";
     if($con->query($sql)){
         $m = "Success!";
         echo "<script type='text/javascript'>

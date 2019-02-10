@@ -133,7 +133,7 @@ if (!isset($_SESSION['username'])) {
                             </h5>
                             <h4>
                                 <small>Price</small>
-                                : ' . $row['equipPrice'] . '
+                                : ' . $row['totalPrice'] . '
                             </h4>
                             <h4>
                                 <small>Service Provider</small>
