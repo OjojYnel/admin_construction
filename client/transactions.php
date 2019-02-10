@@ -174,6 +174,7 @@ if (!isset($_SESSION['username'])) {
                                         <p class="card-text">Ongoing</p>
                                         <form action="cancelRent.php" method="post">
                                             <input type="hidden" name="rentID" value="' . $row['id'] . '">
+                                            <button  type="submit"  class="btn btn-danger">Cancel </button>
                                         </form>
                                        
                                     </div>
