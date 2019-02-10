@@ -316,7 +316,7 @@ session_start();
                         echo "No Data from Database";
                     }
                 } else {
-                    $sql = "SELECT * FROM equipments join users on equipments.spid = users.userid  WHERE equipStatus = 'Available' ORDER BY equipPrice";
+                    $sql = "SELECT * FROM equipments join users on equipments.spid = users.userid  ORDER BY equipPrice";
                     $r = $conn->query($sql);
 
                     if ($r->num_rows > 0) {

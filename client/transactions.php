@@ -154,13 +154,13 @@ if (!isset($_SESSION['username'])) {
                             </h4>
                         </div>';
 
-                        if ($row['st'] == 'Renting' && (empty($row['totalPrice']))) {
+                        if ($row['st'] == 'Pending') {
                             echo '
                                     <div class="card-footer text-center">
                                         <p class="card-text">Pending</p>
                                         <form action="cancelRent.php" method="post">
                                             <input type="hidden" name="rentID" value="' . $row['id'] . '">
-                                            <button  id="rn"  data-id="' . $row['id'] . '" data-id2="' . $row['rid'] . '" type="button"  class="btn btn-info"  data-toggle="modal" data-target="#exampleModal2">Rent Now</button>
+                                            <button  type="submit"  class="btn btn-danger">Cancel </button>
                                         </form>
                                        
                                     </div>
