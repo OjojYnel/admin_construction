@@ -12,7 +12,7 @@
     
      
      PreparedStatement ps = null;
-     String queryString1 = "UPDATE rentals SET status = 'Cancelled' WHERE rentalid = '" + id + "'";
+     String queryString1 = "UPDATE rentals SET status = 'Canceled' WHERE rentalid = '" + id + "'";
      ps = con.prepareStatement(queryString1);
      ps.executeUpdate();
      
