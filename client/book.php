@@ -14,6 +14,10 @@ if(!isset($_SESSION['username'])){
     $ti = $_POST['ti'];
     $id = $_POST['ayd'];
     $d = $_POST['dura'];
+    $op = $_POST['ope'];
+    if(empty($op)){
+        $op = 0;
+    }
 
     $sql = "SELECT equipPrice FROM equipments WHERE equipId = '$id'";
     $res = $con->query($sql);
@@ -37,8 +41,11 @@ if(!isset($_SESSION['username'])){
     $az = $aw2[0];
 
     $tp = $d * $az;
+    $tp2 = $op * $d;
 
-    $sql = "INSERT INTO rentals (userId, equipId, rental_date,rental_date_time,duration,totalPrice) VALUES ('$user','$id','$dr','$ti','$d','$tp')";
+    $tpp = $tp + $tp2;
+
+    $sql = "INSERT INTO rentals (userId, equipId, rental_date,rental_date_time,duration,totalPrice) VALUES ('$user','$id','$dr','$ti','$d','$tpp')";
     if($con->query($sql)){
         $m = "Success!";
         echo "<script type='text/javascript'>

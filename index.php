@@ -452,6 +452,7 @@ session_start();
                         <th>Start Time</th>
                         <th>Number of Hours</th>
                         <th>Operator</th>
+                        <th>Operator Price Per Hour</th>
                         </thead>
 
                         <tbody>
@@ -471,21 +472,16 @@ session_start();
                             <td>
                                 <input type="number" min="1" max="24" class="form-control" name="dura">
                             </td>
+
                             <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios"
-                                           id="exampleRadios1" value="option1" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        With Operator
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios"
-                                           id="exampleRadios2" value="option2">
-                                    <label class="form-check-label" for="exampleRadios2">
-                                        Without Operator
-                                    </label>
-                                </div>
+                                <select class="form-control" id="op" onchange="checkOp()">
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="1">With Operator</option>
+                                    <option value="2">No Operator</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input id="hr" type="number"  class="form-control" name="ope">
                             </td>
 
                         </tr>
@@ -525,6 +521,19 @@ session_start();
 </script>
 
 <script>
+
+    function checkOp() {
+        d = document.getElementById("op").value;
+        console.log(d);
+        if (d === "1"){
+           $('#hr').removeAttr("disabled")
+        }else{
+            $('#hr').attr("disabled","disabled")
+        }
+
+
+    }
+
     function checkdura(x) {
         y = x.length;
         document.getElementById("err").value = x
